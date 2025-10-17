@@ -14,3 +14,8 @@ A web app for estimating an individual's carbon footprint.
 - **Frontend:** React, Vite, Tailwind CSS, JavaScript
 - **Backend:** PHP (Apache/XAMPP), MySQL
 - **Env:** Local XAMPP stack (Apache + MySQL)
+
+## Folders
+- **carbon_app_api:** This folder contains all PHP files required for the application
+- **carbon-footprint-app:** This folder contains all frontend files
+- **db:** This folder contains the SQL file required for the application
