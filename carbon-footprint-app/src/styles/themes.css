@@ -1,0 +1,186 @@
+/**
+ * ============================================================
+ *  File: themes.css
+ *  Location: src/styles/
+ *
+ *  Description:
+ *  Defines all color theme variables for the application,
+ *  including backgrounds, surfaces, text colors, and semantic
+ *  states (primary, success, error). Themes are applied by
+ *  toggling a CSS class on the <html> element.
+ *
+ *  Author: Finlay Shaw
+ * ============================================================
+ */
+
+
+/* ---------- Light (default) ---------- */
+:root {
+  /* Base backgrounds */
+  --bg: 255 255 255;                 /* Page background (white) */
+  --surface: 255 255 255;            /* Card / panel background */
+  --surface-variant: 243 244 246;    /* Alternate surface (light gray) */
+
+  /* Text colors */
+  --fg: 17 24 39;                    /* Primary text (near-black) */
+  --muted-fg: 75 85 99;              /* Secondary text (gray) */
+
+  /* Border color */
+  --border: 229 231 235;             /* Subtle divider lines */
+
+  /* Brand / accent color */
+  --primary: 22 163 74;              /* Emerald green accent */
+  --primary-contrast: 255 255 255;   /* Text on primary (white) */
+
+  /* Semantic colors */
+  --success-bg: 240 253 244;         /* Light green background */
+  --success-fg: 22 101 52;           /* Dark green text */
+  --error-bg: 254 242 242;           /* Soft red background */
+  --error-fg: 153 27 27;             /* Deep red text */
+
+  /* Shadow transparency (used in Tailwind shadows) */
+  --shadow: 0 0 0 / 0.08;
+
+  /* Used globally for hover/focus outlines */
+  --hover-ring: 17 24 39;            /* Dark ring for light UI */
+}
+
+
+/* ---------- Dark (neutral charcoal) ---------- */
+html.theme-dark, :root.theme-dark {
+  /* Dark base backgrounds */
+  --bg: 23 23 23;                    /* Main background */
+  --surface: 28 28 28;               /* Card/panel */
+  --surface-variant: 38 38 38;       /* Alt surface for contrast */
+
+  /* Text colors */
+  --fg: 236 236 236;                 /* Primary text (light gray) */
+  --muted-fg: 160 160 160;           /* Secondary text */
+
+  /* Borders and dividers */
+  --border: 64 64 64;                /* Subtle neutral border */
+
+  /* Accent / brand color */
+  --primary: 34 197 94;              /* Emerald (bright on dark) */
+  --primary-contrast: 23 23 23;      /* Dark text on light accent */
+
+  /* Success and error states */
+  --success-bg: 20 83 45;            /* Deep green */
+  --success-fg: 187 247 208;         /* Minty text */
+  --error-bg: 69 10 10;              /* Deep red background */
+  --error-fg: 254 202 202;           /* Light red text */
+
+  --shadow: 0 0 0 / 0.40;            /* Stronger shadows for dark mode */
+
+  --hover-ring: 255 255 255;         /* White focus ring */
+}
+
+
+/* ---------- Green (Vivid — lighter) ---------- */
+html.theme-green,
+:root.theme-green {
+  /* Forest-inspired backgrounds */
+  --bg: 22 45 33;                    /* Deep green background */
+  --surface: 28 60 43;               /* Card surface */
+  --surface-variant: 38 78 56;       /* Hover/alt surface */
+
+  /* Text colors */
+  --fg: 233 244 238;                 /* Pale green text */
+  --muted-fg: 176 201 188;           /* Softer, muted text */
+
+  /* Border and accents */
+  --border: 84 144 114;              /* Gentle green border */
+  --primary: 20 227 127;             /* Bright emerald accent */
+  --primary-contrast: 9 16 12;       /* Dark text on light accent */
+
+  /* Status states */
+  --success-bg: 18 84 50;            /* Deep green success bg */
+  --success-fg: 201 250 224;         /* Pale green text */
+  --error-bg: 76 14 14;              /* Deep red for errors */
+  --error-fg: 254 202 202;           /* Light red text */
+
+  --hover-ring: 255 255 255;         /* White outline ring */
+  --shadow: 0 0 0 / 0.45;            /* Richer shadows */
+}
+
+
+/* ---------- Blue (Midnight) ---------- */
+html.theme-blue, :root.theme-blue {
+  /* Deep navy bases */
+  --bg: 15 23 42;                    /* Very dark blue base */
+  --surface: 21 30 55;               /* Slightly lighter surface */
+  --surface-variant: 30 41 69;       /* Hover/alt state */
+
+  /* Text colors */
+  --fg: 226 232 240;                 /* Light gray/blue text */
+  --muted-fg: 148 163 184;           /* Muted gray-blue text */
+  --border: 51 65 85;                /* Subtle blue-gray border */
+
+  /* Accent */
+  --primary: 59 130 246;             /* Vibrant blue accent */
+  --primary-contrast: 10 15 25;      /* Dark text on blue accent */
+
+  /* Success and error colors */
+  --success-bg: 22 101 52;           /* Green success bg */
+  --success-fg: 187 247 208;         /* Light success text */
+  --error-bg: 69 10 10;              /* Red background */
+  --error-fg: 254 202 202;           /* Light red text */
+
+  --shadow: 0 0 0 / 0.40;
+  --hover-ring: 255 255 255;         /* White outline */
+}
+
+
+/* ---------- Gray (Mid/Dark neutral) ---------- */
+html.theme-gray,
+:root.theme-gray {
+  /* Neutral gray bases */
+  --bg: 92 92 92;                    /* Background gray */
+  --surface: 74 74 74;               /* Card surface */
+  --surface-variant: 66 66 66;       /* Hover surface */
+
+  /* Text */
+  --fg: 243 244 246;                 /* Bright white text */
+  --muted-fg: 200 205 210;           /* Soft gray for subtitles */
+
+  /* Borders and accent */
+  --border: 112 112 112;             /* Subtle line */
+  --primary: 34 197 94;              /* Emerald accent (brand color) */
+  --primary-contrast: 20 24 20;      /* On-accent text */
+
+  /* States */
+  --success-bg: 20 83 45;            /* Dark green background */
+  --success-fg: 187 247 208;         /* Mint text */
+  --error-bg: 69 10 10;              /* Red background */
+  --error-fg: 254 202 202;           /* Light red text */
+
+  --hover-ring: 255 255 255;         /* White ring for contrast */
+  --shadow: 0 0 0 / 0.38;            /* Mid-strength shadows */
+}
+
+
+/* ---------- High Contrast (accessibility) ---------- */
+html.theme-contrast, :root.theme-contrast {
+  /* True black base for max contrast */
+  --bg: 0 0 0;
+  --surface: 0 0 0;
+  --surface-variant: 32 32 32;
+
+  /* White text for maximum readability */
+  --fg: 255 255 255;
+  --muted-fg: 230 230 230;
+  --border: 255 255 255;             /* Visible white borders */
+
+  /* Bright yellow accent (high visibility) */
+  --primary: 255 255 0;
+  --primary-contrast: 0 0 0;         /* Black text on yellow */
+
+  /* Success / error colors simplified for contrast */
+  --success-bg: 0 128 0;             /* Pure green background */
+  --success-fg: 255 255 255;         /* White text */
+  --error-bg: 139 0 0;               /* Dark red */
+  --error-fg: 255 255 255;           /* White text */
+
+  --shadow: 0 0 0 / 0.80;            /* Heavier shadow */
+  --hover-ring: 255 255 255;         /* Strong white outline */
+}

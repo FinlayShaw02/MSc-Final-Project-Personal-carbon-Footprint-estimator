@@ -1,0 +1,167 @@
+/* ---------------------------------------------------------
+   Tailwind + CSS Variables (themes)
+--------------------------------------------------------- */
+@import "tailwindcss";
+@import "./styles/themes.css";
+
+/* Tell the browser which themes are dark (for form controls/scrollbars) */
+:root { color-scheme: light; }
+html.theme-dark,
+html.theme-green,
+html.theme-blue,
+html.theme-sage,
+html.theme-blue-nord,
+html.theme-contrast { color-scheme: dark; }
+
+/* Map CSS variables -> Tailwind tokens (so you can use bg-bg, text-fg, etc.) */
+@theme {
+  --color-bg: rgb(var(--bg) / <alpha-value>);
+  --color-surface: rgb(var(--surface) / <alpha-value>);
+  --color-surfaceVariant: rgb(var(--surface-variant) / <alpha-value>);
+  --color-fg: rgb(var(--fg) / <alpha-value>);
+  --color-muted: rgb(var(--muted-fg) / <alpha-value>);
+  --color-border: rgb(var(--border) / <alpha-value>);
+  --color-primary: rgb(var(--primary) / <alpha-value>);
+  --color-primaryContrast: rgb(var(--primary-contrast) / <alpha-value>);
+  --color-successBg: rgb(var(--success-bg) / <alpha-value>);
+  --color-successFg: rgb(var(--success-fg) / <alpha-value>);
+  --color-errorBg: rgb(var(--error-bg) / <alpha-value>);
+  --color-errorFg: rgb(var(--error-fg) / <alpha-value>);
+}
+
+/* ---------------------------------------------------------
+   Base: global element styles & accessibility
+--------------------------------------------------------- */
+@layer base {
+  html, body, #root { height: 100%; width: 100%; }
+
+  body {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Make theme colors the default page colors */
+    background-color: rgb(var(--bg));
+    color: rgb(var(--fg));
+
+    /* Smoothen theme switches */
+    transition: background-color .2s ease, color .2s ease;
+  }
+
+  /* Optional: common UI surfaces transition nicely */
+  .card, .panel, .btn {
+    transition:
+      background-color .2s ease,
+      border-color .2s ease,
+      color .2s ease,
+      box-shadow .2s ease;
+  }
+
+  /* Text selection uses primary (still readable) */
+  ::selection {
+    background: rgb(var(--primary) / 0.25);
+    color: rgb(var(--fg));
+  }
+
+  /* Links */
+  a { @apply text-primary underline-offset-4 transition-colors duration-150; }
+  a:hover { @apply underline opacity-90; }
+
+  /* Buttons & button-like elements */
+  :is(button,[type="button"],[type="submit"],[role="button"]) {
+    @apply transition-[background-color,box-shadow,transform,color] duration-150;
+  }
+
+  /* Hover: subtle tint + theme-aware crisp ring + soft glow */
+  :is(button,[type="button"],[type="submit"],[role="button"]):not(:disabled):hover {
+    @apply bg-surfaceVariant/80;
+    /* --hover-ring is defined per theme (white on dark, dark on light) */
+    box-shadow:
+      0 0 0 2px rgb(var(--hover-ring) / 0.95) inset,
+      0 0 0 3px rgb(var(--hover-ring) / 0.28);
+  }
+
+  /* Navigation links (e.g., Sidebar) */
+  nav a { @apply transition-colors duration-150; }
+  nav a:hover { @apply bg-surfaceVariant/70; }
+
+  /* Accessible focus ring for all interactive controls */
+  :is(a,button,[type="button"],[type="submit"],[role="button"],select,input,textarea):focus-visible {
+    @apply outline-none ring-2 ring-primary;
+  }
+}
+
+/* ---------------------------------------------------------
+   Components: small reusable helpers
+--------------------------------------------------------- */
+@layer components {
+  /* Frosted surfaces (menus/sheets) */
+  .frosted-panel {
+    @apply bg-surface/90 border border-border rounded-xl;
+    /* was: @apply ... shadow-subtle;  <-- remove this */
+    box-shadow: 0 1px 1px rgb(0 0 0 / 0.03), 0 2px 6px rgb(0 0 0 / 0.06);
+    backdrop-filter: blur(8px) saturate(120%);
+  }
+
+  .frosted-menu {
+    @apply bg-surface/70 border border-border/70 rounded-xl shadow-lg;
+    backdrop-filter: blur(10px) saturate(150%);
+  }
+}
+
+/* keep this utility — it's used from JSX, not via @apply */
+@layer utilities {
+  .shadow-subtle {
+    box-shadow: 0 1px 1px rgb(0 0 0 / 0.03), 0 2px 6px rgb(0 0 0 / 0.06);
+  }
+}
+
+/* ---------------------------------------------------------
+   Utilities: custom utility classes
+--------------------------------------------------------- */
+@layer utilities {
+  /* Reusable subtle shadow utility for cards/headers */
+  .shadow-subtle {
+    box-shadow: 0 1px 1px rgb(0 0 0 / 0.03), 0 2px 6px rgb(0 0 0 / 0.06);
+  }
+
+  /* Theme-aware activity cards (used on Log Activity) */
+  .activity-card {
+    background-color: rgb(var(--surface));
+    border: 1px solid rgb(var(--border));
+    border-radius: 0.5rem;
+    transition:
+      transform .15s ease,
+      box-shadow .15s ease,
+      background-color .15s ease,
+      border-color .15s ease;
+    cursor: pointer;
+  }
+  .activity-card:hover {
+    /* per-theme hover bg + ring from --hover-ring */
+    background-color: rgb(var(--card-hover-bg) / 0.78);
+    box-shadow:
+      0 2px 10px rgb(0 0 0 / 0.12),
+      0 0 0 2px rgb(var(--hover-ring) / 0.95) inset,
+      0 0 0 3px rgb(var(--hover-ring) / 0.18);
+    transform: translateY(-2px);
+  }
+  .activity-card:active { transform: translateY(-1px) scale(0.99); }
+  .activity-card:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgb(var(--primary) / 0.45),
+      0 0 0 2px rgb(var(--hover-ring) / 0.95) inset;
+  }
+  .activity-card--selected {
+    background-color: rgb(var(--surface-variant));
+    border-color: rgb(var(--primary));
+    box-shadow: 0 0 0 1px rgb(var(--primary) / 0.35) inset;
+  }
+}
+/* Ensure the mobile header paints a fully opaque layer in every theme */
+.app-fixed-header {
+  background: rgb(var(--surface)) !important; /* no alpha */
+}
