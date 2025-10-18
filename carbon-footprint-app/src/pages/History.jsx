@@ -6,7 +6,7 @@
  *  Description:
  *  Displays a users recorded carbon-emitting activities with
  *  flexible date filtering, category selection, and two display
- *  modes — list and calendar. Provides summary totals, category
+ *  modes - list and calendar. Provides summary totals, category
  *  breakdowns, and inline editing/deletion of entries.
  *
  *  Author: Finlay Shaw
@@ -398,7 +398,7 @@ function History() {
               { value: "", label: "All" },
               ...categoryOptions.map((c) => ({ value: c, label: c })),
             ]}
-            // keeps heights aligned with your inputs
+            // keeps heights aligned with inputs
             buttonClassName="h-10"
             menuClassName="max-h-64"
           />

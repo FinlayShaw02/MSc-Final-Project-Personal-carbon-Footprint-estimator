@@ -146,7 +146,7 @@ function LogActivity() {
         <h1 className="text-2xl font-bold mb-2">Log Activity</h1>
         <p className="text-muted mb-4">Track your CO₂ emissions from daily actions.</p>
 
-        {/* Category filter pills — resets search and modal selections when switching */}
+        {/* Category filter pills - resets search and modal selections when switching */}
         <div className="flex flex-wrap gap-2 mb-2">
           {topLevelCategories.map((cat) => (
             <button
@@ -201,7 +201,7 @@ function LogActivity() {
         )}
       </div>
 
-      {/* Activity grid — keyboard accessible (Enter/Space) and shows selected styling */}
+      {/* Activity grid - keyboard accessible (Enter/Space) and shows selected styling */}
       <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-1 px-4 sm:px-6 mt-4 mb-10">
         {filteredActivities.length > 0 ? (
           filteredActivities.map((activity) => (
@@ -234,7 +234,7 @@ function LogActivity() {
         )}
       </div>
 
-      {/* Activity modal — handles quantity input and submit; shows live or finalised emission calc */}
+      {/* Activity modal - handles quantity input and submit; shows live or finalised emission calc */}
       {selectedActivity && (
         <ActivityModal
           activity={selectedActivity}

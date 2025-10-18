@@ -31,7 +31,7 @@ export const THEMES = [
 
 /**
  * Extract only theme class names (excluding “light” and “system”)
- * — these are the classes toggled on <html>.
+ * these are the classes toggled on <html>.
  */
 export const THEME_CLASSES = THEMES
   .map(t => t.value)
@@ -83,7 +83,7 @@ export function applyTheme(theme) {
     // System mode: follow OS preference dynamically
     setColorSchemeOnHtml(resolveSystemScheme());
   } else if (theme === "light") {
-    // Default light mode — no theme class needed
+    // Default light mode  no theme class needed
     setColorSchemeOnHtml("light");
   } else {
     // Apply a custom theme class (e.g., theme-dark, theme-blue)

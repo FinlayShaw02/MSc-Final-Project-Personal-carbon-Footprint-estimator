@@ -104,7 +104,7 @@ $blockWhereP = "NOT EXISTS (
 $catFilterC  = $cat !== '' ? "AND a.category  = :cat_c" : "";
 $catFilterP  = $cat !== '' ? "AND ap.category = :cat_p" : "";
 
-/* emissions per your schema */
+
 $EM  = "a.emissions_kg_co2e";
 $EMP = "ap.emissions_kg_co2e";
 

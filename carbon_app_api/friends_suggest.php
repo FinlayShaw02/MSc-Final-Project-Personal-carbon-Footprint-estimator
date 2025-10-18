@@ -46,7 +46,7 @@ $stmt->execute([$me, $me, $me, $me, $me, $me]);  // 5 joins + WHERE u.id <> ?
 $rows = $stmt->fetchAll();
 $mode = 'strict';
 
-/* 2) Wide fallback — exclude only me */
+/* 2) Wide fallback, exclude only me */
 if (!$rows) {
   $sqlWide = "
     SELECT u.id, u.name, u.email
@@ -60,7 +60,7 @@ if (!$rows) {
   $mode = 'wide';
 }
 
-/* 3) Last resort — anybody (incl. me) */
+/* 3) Last resort, anybody (incl. me) */
 if (!$rows) {
   $sqlAny = "
     SELECT u.id, u.name, u.email

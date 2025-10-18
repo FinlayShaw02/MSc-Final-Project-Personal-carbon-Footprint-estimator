@@ -508,7 +508,7 @@ export default function Goals() {
       ) : err ? (
         <div className="text-[rgb(var(--error-fg))]">Error: {err}</div>
       ) : goals.length === 0 ? (
-        <div className="text-muted">No goals yet — create your first one above.</div>
+        <div className="text-muted">No goals yet, create your first one above.</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{goalCards}</div>
       )}

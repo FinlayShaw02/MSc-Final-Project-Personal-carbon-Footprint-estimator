@@ -5,7 +5,7 @@
  *
  *  Description:
  *  An educational page presenting evidence-based “Did you know?” tips across
- *  key themes (Transport, Home energy, Food, Methods & data). Each section
+ *  key themes (Transport, Home energy, Food, Methods and data). Each section
  *  shows concise facts, impact context and source links.
  *
  *  Author: Finlay Shaw
@@ -15,7 +15,7 @@
 import { useMemo, useState } from "react";
 
 /* ---------- tiny UI bits ---------- */
-// Small pill-like label with themed color tones
+// Small pill like label with themed color tones
 function Badge({ children, tone = "primary" }) {
   const tones = {
     primary: "bg-primary/10 text-primary border-primary/30",
@@ -33,7 +33,7 @@ function Badge({ children, tone = "primary" }) {
   );
 }
 
-// Segmented-control style button for tab switching
+// Segmented control style button for tab switching
 function Pill({ active, onClick, children }) {
   return (
     <button
@@ -49,7 +49,7 @@ function Pill({ active, onClick, children }) {
   );
 }
 
-// Simple card wrapper with icon, title, body, and optional footer
+// Simple card wrapper with icon, title, body and optional footer
 function Card({ icon, title, children, footer }) {
   return (
     <article className="rounded-2xl border border-border bg-surface p-4 shadow-subtle h-full">
@@ -81,7 +81,7 @@ const SECTIONS = [
         title: "Did you know? Electric vs petrol cars",
         bullets: [
           "Did you know using an electric vehicle in the UK produces around two thirds fewer emissions per kilometre than a petrol car (DEFRA, 2025)?",
-          "The gap will grow as the electricity grid adds more renewables.",
+          "The gap will grow as the electricity grid adds more renewable energy.",
         ],
         refs: ["DEFRA2025"],
       },
@@ -89,7 +89,7 @@ const SECTIONS = [
         icon: "🚌",
         title: "Did you know? Public transport",
         bullets: [
-          "A full double-decker bus can replace up to 75 cars on the road, cutting congestion and emissions per passenger (DfT, 2025).",
+          "A full double decker bus can replace up to 75 cars on the road, cutting congestion and emissions per passenger (DfT, 2025).",
           "Rail travel per passenger-km emits much less than driving alone.",
         ],
         refs: ["LTQG2025"],
@@ -114,7 +114,7 @@ const SECTIONS = [
         icon: "🚿",
         title: "Did you know? Shower flow",
         bullets: [
-          "A typical UK shower uses 10–15 litres of water per minute. Cutting flow to 6 L/min can halve water heating energy needs (Waterwise).",
+          "A typical UK shower uses 10-15 litres of water per minute. Cutting flow to 6 L/min can halve water heating energy needs (Waterwise).",
         ],
         refs: ["WATERWISE", "GBS2015"],
       },
@@ -146,7 +146,7 @@ const SECTIONS = [
         icon: "🗑️",
         title: "Did you know? Food waste",
         bullets: [
-          "UK households throw away nearly 70 kg of food per person each year — wasting money and causing avoidable emissions.",
+          "UK households throw away nearly 70 kg of food per person each year, wasting money and causing avoidable emissions.",
         ],
         refs: [],
       },
@@ -183,38 +183,38 @@ const SECTIONS = [
 const SOURCES = {
   DEFRA2025: {
     label:
-      "DEFRA (2025). UK Government greenhouse gas conversion factors for company reporting 2025. (In-text: DEFRA, 2025)",
+      "DEFRA (2025). UK Government greenhouse gas conversion factors for company reporting 2025.",
     urls: [
       "https://www.gov.uk/government/publications/greenhouse-gas-reporting-conversion-factors-2025",
     ],
   },
   LTQG2025: {
     label:
-      "Department for Transport (2025). Local Transport Quantifiable Carbon Guidance. (In-text: DfT, 2025)",
+      "Department for Transport (2025). Local Transport Quantifiable Carbon Guidance.",
     urls: [
       "https://assets.publishing.service.gov.uk/media/68af13a12f185664821558c7/local-transport-quantifiable-carbon-guidance.pdf",
     ],
   },
   WATERWISE: {
     label:
-      "Waterwise (UK). Typical shower flows 10–15 L/min; efficient ~6 L/min. (In-text: Waterwise, n.d.)",
+      "Waterwise (UK). Typical shower flows 10–15 L/min; efficient 6 L/min.",
     urls: ["https://waterwise.org.uk/how-to-save-water/"],
   },
   GBS2015: {
     label:
-      "UK Government Buying Standards: showers/taps (2015). European Water Label ~6 L/min for efficient showers. (In-text: UK GBS, 2015)",
+      "UK Government Buying Standards: showers/taps (2015). European Water Label 6 L/min for efficient showers.",
     urls: [
       "https://assets.publishing.service.gov.uk/media/5a807d8ded915d74e622ec1a/gbs-taps-automatic-sprays-showers-urinal-2015.pdf",
     ],
   },
   CLARK2022: {
     label:
-      "Clark, M.A. et al. (2022) Estimating the environmental impacts of 57,000 food products. PNAS 119(33): e2120584119.",
+      "Clark, et al. (2022) Estimating the environmental impacts of 57,000 food products. PNAS 119(33): e2120584119.",
     urls: ["https://doi.org/10.1073/pnas.2120584119"],
   },
   OWID2022: {
     label:
-      "Our World in Data (2022). Environmental impacts of food (Clark et al. 2022) [dataset]",
+      "Our World in Data (2022). Environmental impacts of food (Clark et al. 2022) dataset",
     urls: ["https://ourworldindata.org/environmental-impacts-of-food"],
   },
   AGILE: {
@@ -236,13 +236,13 @@ function host(u) {
 
 /* ---------- page ---------- */
 export default function Education() {
-  // Active tab key (persisting state locally is optional; not done here)
+  // Active tab key 
   const [tab, setTab] = useState("transport");
 
   // Currently selected section object
   const section = useMemo(() => SECTIONS.find((s) => s.key === tab), [tab]);
 
-  // Set of reference IDs used by the active tab’s tips (deduped)
+  // Set of reference IDs used by the active tabs tips 
   const currentRefIds = useMemo(() => {
     const ids = [];
     section.tips.forEach((t) =>
@@ -258,7 +258,7 @@ export default function Education() {
       {/* Page header with context badges */}
       <header className="flex items-center gap-2 mb-4">
         <h1 className="text-2xl font-bold">Did you know?</h1>
-        <Badge tone="info">Evidence-based facts</Badge>
+        <Badge tone="info">Evidence based facts</Badge>
         <div className="ml-auto flex items-center gap-2">
           <Badge tone={section.impact === "High" ? "warn" : "primary"}>
             Focus: {section.label}
@@ -357,7 +357,7 @@ export default function Education() {
             })}
           </ul>
           <p className="text-[11px] text-muted mt-3">
-            These did-you-know facts are drawn from UK Government conversion factors, peer-reviewed food footprint studies, and water efficiency standards. Values vary depending on home, vehicle, and diet.
+            These did you know facts are drawn from UK Government conversion factors, peer reviewed food footprint studies and water efficiency standards. Values vary depending on home, vehicle and diet.
           </p>
         </details>
       )}

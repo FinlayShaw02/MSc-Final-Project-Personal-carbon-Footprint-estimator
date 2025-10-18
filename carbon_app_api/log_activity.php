@@ -7,7 +7,7 @@
  *  Purpose:
  *    Create a single activity log entry for the authenticated user.
  *    The database computes `emissions_kg_co2e` from `quantity` × `emission_factor`
- *    (per your schema/triggers), so the request only supplies inputs.
+ *    so the request only supplies inputs.
  *
  *  Author: Finlay Shaw
  * ============================================================

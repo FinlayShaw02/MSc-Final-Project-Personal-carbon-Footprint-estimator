@@ -51,7 +51,7 @@ const iso = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate(
 
 /* ---------- API helpers ---------- */
 async function fetchSummary({ from, to }) {
-  // Weekly category summary (server groups by category)
+  // Weekly category summary
   const qs = new URLSearchParams({ from: toSQL(from), to: toSQL(to), group: "category" });
   const res = await fetch(`${API_BASE}/summary.php?${qs}`, WITH_CREDS);
   if (!res.ok) throw new Error("Failed to load summary");
@@ -65,12 +65,12 @@ async function fetchDaily({ from, to }) {
   return res.json();
 }
 async function fetchGoals() {
-  // Goals list (monthly cap, etc.)
+  // Goals list 
   const res = await fetch(`${API_BASE}/goals.php`, WITH_CREDS);
   if (!res.ok) throw new Error("Failed to load goals");
   return res.json();
 }
-/** Optional — if your backend exposes it. Silently ignored if 404. */
+/** Optional */
 async function fetchRecent(limit = 5) {
   // Most recent activities for quick list
   try {
@@ -217,7 +217,7 @@ export default function Dashboard() {
           </Card>
           <Card title="Best day">
             <div className="text-2xl font-semibold">
-              {bestDay ? `${bestDay.label} · ${bestDay.valueDisplay}` : "—"}
+              {bestDay ? `${bestDay.label} · ${bestDay.valueDisplay}` : "-"}
             </div>
           </Card>
         </section>
@@ -245,11 +245,11 @@ export default function Dashboard() {
           </section>
         )}
 
-        {/* Charts: Pie + Top categories (2-col) */}
+        {/* Charts: Pie + Top categories  */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
           <div className="rounded-xl border border-border p-4 bg-surface shadow-subtle">
             <h3 className="font-semibold mb-2">Breakdown by category</h3>
-            {/* Donut of category shares (in user units) */}
+            {/* Donut of category shares  */}
             <CO2PieChart data={pieData} units={units} size={280} innerRadius={0.6} />
           </div>
 
@@ -286,7 +286,7 @@ export default function Dashboard() {
                   <li key={i} className="flex items-center justify-between text-sm">
                     <div className="truncate">
                       <span className="font-medium text-fg">{r.activity_name || "Activity"}</span>
-                      <span className="text-muted"> · {r.category || "—"}</span>
+                      <span className="text-muted"> · {r.category || "-"}</span>
                     </div>
                     <div className="text-fg tabular-nums">
                       {formatEmissions(Number(r.emissions_kg_co2e || 0), units)}

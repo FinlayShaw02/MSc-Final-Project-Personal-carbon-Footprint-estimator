@@ -51,7 +51,7 @@ export default function Layout({ children }) {
       {/* Sidebar (desktop + drawer on mobile) */}
       <Sidebar isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
 
-      {/* Mobile fixed header — solid, opaque, and above everything */}
+      {/* Mobile fixed header - solid, opaque, and above everything */}
       <header
         className="app-fixed-header md:hidden fixed top-0 left-0 right-0 z-[9999]
                    h-16 border-b border-border shadow-subtle"
@@ -69,7 +69,7 @@ export default function Layout({ children }) {
         </div>
       </header>
 
-      {/* Content — always starts below the fixed header on mobile */}
+      {/* Content - always starts below the fixed header on mobile */}
       <main
         className="flex-1 w-full md:ml-64 px-4 md:pt-6 pb-6"
         style={{ paddingTop: HEADER_H }} // equals 64px on mobile

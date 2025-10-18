@@ -295,7 +295,7 @@ export default function Profile() {
               </label>
               <p className="text-sm text-muted mt-1">
                 When enabled, your name and leaderboard totals are visible to all users.
-                Your friends leaderboard isn’t affected.
+                Your friends leaderboard is not affected.
               </p>
             </div>
           </div>

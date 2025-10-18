@@ -15,9 +15,9 @@ require_once __DIR__ . '/config.php';
  *
  *  Notes:
  *  - Uses helper functions from config.php:
- *      • current_user_id() — session auth
- *      • json_body()       — safe JSON decode
- *      • ok()/fail()       — consistent JSON responses
+ *      • current_user_id() - session auth
+ *      • json_body()       - safe JSON decode
+ *      • ok()/fail()       - consistent JSON responses
  *
  *  Author: Finlay Shaw
  * ============================================================

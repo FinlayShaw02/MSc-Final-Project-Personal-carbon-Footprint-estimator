@@ -15,7 +15,7 @@ import pandas as pd
 
 # Step 1: Load the Excel file and skip the first 5 non-data rows
 # - The DEFRA workbook has a preamble/header; real data starts after row 5.
-excel_path = "ghg-conversion-factors-2025-flat-format.xlsx"  # Change this to your actual file path
+excel_path = "ghg-conversion-factors-2025-flat-format.xlsx" 
 sheet_name = "Factors by Category"
 df = pd.read_excel(excel_path, sheet_name=sheet_name, skiprows=5)
 
@@ -46,7 +46,7 @@ df_final = df[[
 ]]
 
 # Step 6: Export to CSV
-# - This CSV is used by subsequent scripts to build JS activity modules.
+# This CSV is used by subsequent scripts to build JS activity modules.
 output_path = "pre-processed-defra.csv"
 df_final.to_csv(output_path, index=False)
 

@@ -18,12 +18,12 @@ function CO2PieChart({
   data = [],
   title,
   units = "kg",
-  size = 260,            // overall SVG size (square)
+  size = 260,            // overall SVG size
   innerRadius = 0.58,    // donut inner radius as fraction of outer radius
   sort = "desc",         // sorting order for slices: "asc" | "desc" | anything (no sort)
   palette = "okabe",     // color palette name or custom array
   legendCols = 2,        // number of legend columns when below
-  legendPosition = "bottom", // "bottom" or side (responsive to md breakpoint)
+  legendPosition = "bottom", // "bottom" or side
   maxLegend = 8,         // max items shown before "View all"
 }) {
   const [active, setActive] = useState(null); // index of highlighted/hovered slice

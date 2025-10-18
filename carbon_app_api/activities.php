@@ -8,7 +8,7 @@
  *  Returns a paginated list of the authenticated user's activity
  *  records within an (inclusive start, exclusive end) datetime range,
  *  with optional filtering by category and fuzzy search across
- *  activity_name, category, and type.
+ *  activity_name, category and type.
  *
  *  Author: Finlay Shaw
  * ============================================================

@@ -26,7 +26,7 @@ declare(strict_types=1);
  */
 
 if (defined('CARBON_APP_BOOTSTRAPPED')) {
-  return; // Already loaded in this request—avoid re-running side effects
+  return; // Already loaded in this request avoid re-running side effects
 }
 define('CARBON_APP_BOOTSTRAPPED', true);
 
@@ -205,10 +205,6 @@ function fail(int $code, string $msg, array $extra = []): void {
   exit;
 }
 
-/**
- * Resolve the current authenticated user id or 401 and exit.
- * Expects $_SESSION['user_id'] to be set by your auth flow.
- */
 function current_user_id(): int {
   if (!isset($_SESSION['user_id'])) {
     http_response_code(401);

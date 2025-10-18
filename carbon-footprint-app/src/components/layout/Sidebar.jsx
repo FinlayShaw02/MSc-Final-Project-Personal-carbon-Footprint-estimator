@@ -40,7 +40,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
   return (
     <>
-      {/* Overlay for mobile — shown behind the sidebar when open */}
+      {/* Overlay for mobile - shown behind the sidebar when open */}
       <div
         className={classNames(
           "fixed inset-0 bg-bg/50 backdrop-blur-sm z-30 md:hidden transition-opacity duration-200",

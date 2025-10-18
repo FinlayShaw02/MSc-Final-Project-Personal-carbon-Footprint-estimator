@@ -27,7 +27,7 @@ export default function Onboarding() {
         {/* App title */}
         <h1 className="text-4xl font-bold mb-4 text-fg">Welcome to EcoTrack</h1>
 
-        {/* Introductory description of the app’s purpose */}
+        {/* Introductory description of the apps purpose */}
         <p className="text-muted mb-8">
           Track your personal carbon footprint, set reduction goals, and
           discover simple tips to reduce your impact. One activity at a time.

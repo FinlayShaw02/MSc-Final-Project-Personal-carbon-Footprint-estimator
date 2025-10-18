@@ -5,7 +5,7 @@
 #  Generates a JavaScript module (`foodActivities.js`) from the dataset
 #  “Environmental impacts of food (Clark et al. 2022).csv”.
 #  Each food or drink item is converted into a structured activity object
-#  suitable for use in web-based carbon calculators or sustainability apps.
+#  suitable for use in web based carbon calculators or sustainability apps.
 #
 #  Author: Finlay Shaw
 # =============================================================================

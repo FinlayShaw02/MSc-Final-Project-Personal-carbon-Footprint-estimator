@@ -4,7 +4,7 @@
  *  Screen: Summary (themed + FrostedSelect)
  *
  *  Description:
- *  Visualises your emissions for a chosen date range with:
+ *  Visualises emissions for a chosen date range with:
  *    - Daily trend line (EmissionsLineGraph)
  *    - Breakdown pie + ranked bars
  *      • Category = “All”  -> breakdown by category
@@ -152,7 +152,7 @@ export default function Summary() {
   const breakdownForCharts = useMemo(
     () =>
       (items || []).map((row) => ({
-        label: row.label || "—",
+        label: row.label || "-",
         value: convertFromKg(Number(row.value || 0), units),
       })),
     [items, units]

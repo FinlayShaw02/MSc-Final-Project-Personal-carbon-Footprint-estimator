@@ -39,7 +39,7 @@ gas_factor = df[
     (df["Unit"].str.contains("kwh"))
 ]["EmissionFactor"].mean()
 
-# Water factor — can be per litre or per cubic metre depending on DEFRA table
+# Water factor - can be per litre or per cubic metre depending on DEFRA table
 raw_water_factor = df[
     (df["Category"].str.contains("water")) &
     (df["Unit"].str.contains("litre|cubic metre", regex=True))

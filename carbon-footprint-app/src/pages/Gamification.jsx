@@ -183,7 +183,7 @@ function Row({ rank, name, metrics, fmtMass, fmtPerDay, unitLabel }) {
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="font-semibold text-fg truncate">{name || "—"}</h3>
+          <h3 className="font-semibold text-fg truncate">{name || "-"}</h3>
 
           {/* bottom stats row */}
           <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 items-center">
@@ -485,7 +485,7 @@ export default function Gamification() {
         </div>
         <p className="text-xs text-muted mt-3">
           We rank by <strong>filled daily average</strong> in this window (inactive days are filled using
-          your active-day average for the same window). Hover the ⓘ to see active-day averages.
+          your active day average for the same window). Hover the ⓘ to see active day averages.
         </p>
       </Modal>
 

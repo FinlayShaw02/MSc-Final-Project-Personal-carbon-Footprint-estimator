@@ -19,7 +19,7 @@
 
 require_once __DIR__ . '/config.php';
 
-// Ensure user is authenticated — helper will exit(401) if not logged in
+// Ensure user is authenticated, helper will exit(401) if not logged in
 $me = current_user_id();
 
 /* ------------------------------------------------------------
