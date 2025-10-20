@@ -16,7 +16,7 @@ import Modal from "./Modal";
 
 export default function ConfirmDeleteModal({
   open,                 // boolean - whether the modal is visible
-  itemLabel = "this item", // label of the item being deleted (e.g., “activity”)
+  itemLabel = "this item", // label of the item being deleted 
   onCancel,             // callback when user cancels or closes
   onConfirm,            // callback when user confirms delete
 }) {
@@ -39,7 +39,7 @@ export default function ConfirmDeleteModal({
           Cancel
         </button>
 
-        {/* Confirm button - triggers permanent delete */}
+        {/* Confirm button triggers permanent delete */}
         <button
           className="px-3 py-1 rounded bg-[rgb(var(--error-fg))] text-primaryContrast hover:opacity-90"
           onClick={onConfirm}

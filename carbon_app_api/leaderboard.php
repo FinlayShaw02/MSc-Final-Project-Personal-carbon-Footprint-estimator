@@ -6,7 +6,7 @@
  *
  *  Purpose:
  *    Produce emissions leaderboards for a selected time window and scope,
- *    ranking users by their *filled daily average* (see “Ranking Policy”).
+ *    ranking users by their *filled daily average*
  *
  *  Author: Finlay Shaw
  * ============================================================
@@ -56,6 +56,7 @@ if ($windowDays <= 0) {
 }
 
 /* ---- Minimum activity requirement ----
+  Did not end up being used but kept for possible future use.
    Default: at least 1/3 of the window days.
    Optional overrides:
      - ?min_active_days=10
@@ -108,7 +109,7 @@ $catFilterP  = $cat !== '' ? "AND ap.category = :cat_p" : "";
 $EM  = "a.emissions_kg_co2e";
 $EMP = "ap.emissions_kg_co2e";
 
-/* ---- Query (LEFT JOIN agg, then filter on min active days) ---- */
+/* ---- Query (LEFT JOIN, then filter on min active days) ---- */
 $sql = "
 SELECT
   c.id,
@@ -184,7 +185,7 @@ $stmt->bindValue(':wd3',    $windowDays, PDO::PARAM_INT);
 /* min active requirement */
 $stmt->bindValue(':minActive', $minActiveDays, PDO::PARAM_INT);
 
-/* bind block params (always present) */
+/* bind block params */
 $stmt->bindValue(':me2_c1',  $me, PDO::PARAM_INT);
 $stmt->bindValue(':me2_c2',  $me, PDO::PARAM_INT);
 $stmt->bindValue(':me2_a1',  $me, PDO::PARAM_INT);

@@ -52,7 +52,7 @@ export default function LoginForm() {
         throw new Error(data?.error || `Login failed: ${res.status}`);
       }
 
-      // Store user data locally for frontend use (session remains in cookie)
+      // Store user data locally for frontend use
       localStorage.setItem("user", JSON.stringify(data.user));
 
       // Redirect user to dashboard after successful login

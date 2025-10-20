@@ -40,7 +40,7 @@ type_keywords = [
         "protein shake", "milkshake"
     ]),
     ("ate", [
-        # General food and meals (large curated list)
+        # General food and meals 
         "almond butter", "almonds", "apple pie", "apples", "asparagus", "avocados", "bagels", "baguette",
         "bacon", "banana loaf", "bananas", "beans", "beef burger", "beef curry", "beef meatballs",
         "beef mince", "beef noodles", "beef steak", "beetroot", "biscuits", "blue cheese", "brazil nuts",
@@ -100,7 +100,7 @@ for _, row in df.iterrows():
         .replace("'", "")
     )
 
-    # Determine food type (ate, drank, used, or fallback)
+    # Determine food type based on keywords
     entity_lower = entity.lower()
     food_type = "other"
     for t_type, keywords in type_keywords:

@@ -21,7 +21,7 @@ function applySavedTheme() {
   const html = document.documentElement;
   const saved =
     localStorage.getItem("theme") ||
-    "light"; // "light", "theme-dark", "theme-green", "theme-blue", "theme-sage", "theme-blue-nord", "theme-contrast"
+    "light"; 
 
   // Remove any previously set theme classes to avoid conflicts
   html.classList.remove(
@@ -32,11 +32,11 @@ function applySavedTheme() {
     "theme-blue-nord",
     "theme-contrast"
   );
-  // Re-apply the saved theme class (no class needed for "light")
+  // Re-apply the saved theme class (if not light)
   if (saved !== "light") html.classList.add(saved);
 }
 
-const HEADER_H = 64; // keep header and content offset in sync (px)
+const HEADER_H = 64; // keep header and content offset in sync
 
 export default function Layout({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false); // mobile drawer open/closed

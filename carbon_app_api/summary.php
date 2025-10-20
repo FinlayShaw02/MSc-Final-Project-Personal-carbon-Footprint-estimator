@@ -32,8 +32,8 @@ try {
   /* ---- Query params ---- */
   $fromRaw  = $_GET['from']     ?? null;
   $toRaw    = $_GET['to']       ?? null;
-  $catRaw   = $_GET['category'] ?? null; // "all" | "" | null => no filter
-  $groupRaw = $_GET['group']    ?? null; // optional: "category" | "activity"
+  $catRaw   = $_GET['category'] ?? null; 
+  $groupRaw = $_GET['group']    ?? null; 
 
   // Normalise category filter
   $category = null;
@@ -44,18 +44,18 @@ try {
     }
   }
 
-  // Grouping: specific category => activity; otherwise => category (unless overridden)
+  // Normalise group param
   $group = $groupRaw ? strtolower(trim((string)$groupRaw)) : null;
   if ($group !== 'activity' && $group !== 'category') {
     $group = ($category !== null) ? 'activity' : 'category';
   }
 
-  // Dates: inclusive start / exclusive end (matches daily.php)
+  // Normalise date range
   $from = $toSqlDate($fromRaw, '1970-01-01 00:00:00');
   $to   = $toSqlDate($toRaw,   '2100-01-01 00:00:00');
   if (strtotime($from) > strtotime($to)) { $tmp = $from; $from = $to; $to = $tmp; }
 
-  /* ---- Grand total (respects category filter) ---- */
+  /* ---- Total kg CO2e ---- */
   $totSql = "
     SELECT ROUND(COALESCE(SUM(emissions_kg_co2e), 0), 3) AS total_kg
     FROM user_activities
@@ -74,9 +74,9 @@ try {
   $stmt->execute($totParams);
   $totalKg = (float)($stmt->fetchColumn() ?? 0.0);
 
-  /* ---- Breakdown (normalised to {label, value}) ---- */
+  /* ---- Breakdown ---- */
   if ($group === 'activity') {
-    // Per-activity (optionally within selected category)
+    // Per-activity
     $sql = "
       SELECT activity_id,
              activity_name AS label,
@@ -105,7 +105,7 @@ try {
     ";
     $params = [ ':uid' => $uid, ':from' => $from, ':to' => $to ];
     if ($category !== null) {
-      // If group=category while filtering a category, this returns a single-row total for that category.
+      // If group=category while filtering a category, this returns a single row total for that category.
       $sql .= " AND category = :category";
       $params[':category'] = $category;
     }
@@ -119,9 +119,9 @@ try {
 
   /* ---- Response ---- */
   ok([
-    'totalKg' => $totalKg,  // number
-    'group'   => $group,    // "category" | "activity"
-    'items'   => $items,    // [{ label, value, ...(maybe activity_id) }]
+    'totalKg' => $totalKg,  
+    'group'   => $group,    
+    'items'   => $items,    
   ]);
 
 } catch (Throwable $e) {

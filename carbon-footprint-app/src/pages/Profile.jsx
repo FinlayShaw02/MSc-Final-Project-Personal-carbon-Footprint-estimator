@@ -99,7 +99,6 @@ export default function Profile() {
         setLoading(false);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Simple setter for form fields
@@ -154,7 +153,7 @@ export default function Profile() {
     setPwForm((f) => ({ ...f, [k]: v }));
   }
 
-  // Change password: basic client-side validation, then API call
+  // Change password: basic client side validation, then API call
   async function onChangePassword(e) {
     e.preventDefault();
     setPwSaving(true);
@@ -190,7 +189,7 @@ export default function Profile() {
       await deleteAccount();
       window.location.href = "";
     } catch (e) {
-      // Reuse top-level msg as inline error and close modal
+      // Reuse top level msg as inline error and close modal
       setMsg(e.message || "Failed to delete account.");
       setConfirmOpen(false);
       setConfirmText("");
@@ -202,7 +201,7 @@ export default function Profile() {
   // Initial loading state
   if (loading) return <div className="p-4 text-fg">Loading…</div>;
 
-  // Style helpers for notices (success vs neutral)
+  // Style helpers for notices 
   const noticeClass =
     msg && msg.toLowerCase().includes("saved")
       ? "text-successFg bg-successBg border-successFg/20"
@@ -229,7 +228,7 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Top-level notice for profile save/delete errors or success */}
+      {/* Top level notice for profile save/delete errors or success */}
       {msg && (
         <div className={`mb-3 text-sm px-3 py-2 rounded border ${noticeClass}`}>
           {msg}
@@ -264,7 +263,7 @@ export default function Profile() {
           />
         </div>
 
-        {/* Units selector (FrostedSelect) */}
+        {/* Units selector */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium mb-1">Units</label>
@@ -387,7 +386,7 @@ export default function Profile() {
         </button>
       </div>
 
-      {/* Delete confirmation modal (type-to-confirm) */}
+      {/* Delete confirmation modal */}
       {confirmOpen && (
         <div
           role="dialog"

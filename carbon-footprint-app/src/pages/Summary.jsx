@@ -35,7 +35,7 @@ const toSQL = (d) => {
     dt.getHours()
   )}:${pad(dt.getMinutes())}:${pad(dt.getSeconds())}`;
 };
-// Default month range (first to last day, full-day bounds)
+// Default month range
 const startOfMonth = (dt = new Date()) => new Date(dt.getFullYear(), dt.getMonth(), 1, 0, 0, 0);
 const endOfMonth = (dt = new Date()) => new Date(dt.getFullYear(), dt.getMonth() + 1, 0, 23, 59, 59);
 // Pretty day label (e.g., "Jan 5")
@@ -53,10 +53,10 @@ async function fetchSummary({ from, to, category }) {
   });
   const res = await fetch(`${API_BASE}/summary.php?${qs}`, WITH_CREDS);
   if (!res.ok) throw new Error("Failed to load summary");
-  return res.json(); // { totalKg, group, items }
+  return res.json(); 
 }
 
-// Daily totals for the range (optionally filtered by category)
+// Daily totals for the range
 async function fetchDaily({ from, to, category }) {
   const qs = new URLSearchParams({
     from: toSQL(from),
@@ -68,7 +68,7 @@ async function fetchDaily({ from, to, category }) {
   return res.json(); // [{ day, entries, total_kg }]
 }
 
-// Load all goals (used to highlight monthly cap progress)
+// Load all goals
 async function fetchGoals() {
   const res = await fetch(`${API_BASE}/goals.php`, WITH_CREDS);
   if (!res.ok) throw new Error("Failed to load goals");
@@ -105,7 +105,7 @@ export default function Summary() {
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
 
-  // Load goals once (best-effort; errors ignored here)
+  // Load goals once 
   useEffect(() => {
     fetchGoals().then(setGoals).catch(() => {});
   }, []);
@@ -119,7 +119,7 @@ export default function Summary() {
     return () => { cancelled = true; };
   }, [range.from, range.to]);
 
-  // Load summary (breakdown + total) and daily series when filters change
+  // Load summary 
   useEffect(() => {
     let cancel = false;
     setLoading(true);
@@ -142,13 +142,13 @@ export default function Summary() {
     return () => { cancel = true; };
   }, [range.from, range.to, category]);
 
-  // Dropdown options for Category (prepend "All")
+  // Dropdown options for Category
   const categoryOptions = useMemo(
     () => [{ value: "", label: "All" }, ...categories.map((c) => ({ value: c, label: c }))],
     [categories]
   );
 
-  // Convert breakdown values to the user’s unit (kg -> lb if needed) for charts
+  // Convert breakdown values to the users unit preference
   const breakdownForCharts = useMemo(
     () =>
       (items || []).map((row) => ({
@@ -158,7 +158,7 @@ export default function Summary() {
     [items, units]
   );
 
-  // Convert daily totals to the user’s unit
+  // Convert daily totals to the users unit preference
   const dailySeries = useMemo(
     () =>
       (daily || []).map((d) => ({
@@ -169,7 +169,7 @@ export default function Summary() {
     [daily, units]
   );
 
-  // Determine which monthly goals apply (global or category-specific)
+  // Determine which monthly goals apply 
   const activeMonthGoals = useMemo(() => {
     const isActiveMonthly = (g) => (g?.period || "month") === "month" && Number(g?.is_active) === 1;
     return goals.filter((g) => isActiveMonthly(g) && (category ? g.category === category : !g.category));
@@ -189,7 +189,6 @@ export default function Summary() {
     };
   }, [activeMonthGoals, totalKg, units]);
 
-  // Titles adapt to grouping (category vs activity)
   const breakdownTitle =
     group === "activity"
       ? `Breakdown by activity${category ? ` in ${category}` : ""}`

@@ -24,13 +24,13 @@ export default function BreakdownCard({
   topN,
 }) {
   // UI + data state
-  const [category, setCategory] = useState(initialCategory); // current filter (e.g., "all" or a category)
+  const [category, setCategory] = useState(initialCategory); // current filter 
   const [loading, setLoading] = useState(false);             // loading flag for fetch
   const [err, setErr] = useState(null);                      // error message if fetch fails
   const [data, setData] = useState({
     totalKg: 0,
-    group: "category",     // "category" or "activity" (server-driven)
-    categoryName: null,    // selected category label (server echo)
+    group: "category",     // "category" or "activity" 
+    categoryName: null,    // selected category label or null
     items: [],             // array of { label, value } for chart
   });
 
@@ -43,7 +43,7 @@ export default function BreakdownCard({
     return q.toString();
   }, [from, to, category]);
 
-  // Fetch summary data whenever apiBase or query string changes
+  // Fetch summary data when query string changes
   useEffect(() => {
     const ac = new AbortController();
     setLoading(true);
@@ -69,11 +69,10 @@ export default function BreakdownCard({
       })
       .finally(() => setLoading(false));
 
-    // Cleanup to cancel in-flight request on unmount/dep change
     return () => ac.abort();
   }, [apiBase, qs]);
 
-  // Optionally cap legend items shown in the chart and group the remainder into "Other"
+  // Prepare chart data
   const chartItems = useMemo(() => {
     const items = Array.isArray(data.items) ? data.items : [];
     if (!topN || items.length <= topN) return items;
@@ -83,11 +82,11 @@ export default function BreakdownCard({
     return top;
   }, [data.items, topN]);
 
-  // Prefer server-provided categoryName; fall back to local state when not "all"
+  // Prefer server provided categoryName; fall back to local state when not "all"
   const selectedCategory =
     data.categoryName || (category && category !== "all" ? category : null);
 
-  // Handlers to drill in/out by category (wired to CO2PieChart props)
+  // Handlers to drill in/out by category
   const handleSelectCategory = (label) => setCategory(label);
   const handleBack = () => setCategory("all");
 
@@ -118,8 +117,8 @@ export default function BreakdownCard({
         data={chartItems}
         group={data.group}
         selectedCategory={selectedCategory}
-        onSelectCategory={handleSelectCategory} // clicking a legend/slice drills down
-        onBack={data.group === "activity" ? handleBack : undefined} // show back only when drilled into activities
+        onSelectCategory={handleSelectCategory} 
+        onBack={data.group === "activity" ? handleBack : undefined}
         units="kg"
         palette="okabe"
         sort="desc"

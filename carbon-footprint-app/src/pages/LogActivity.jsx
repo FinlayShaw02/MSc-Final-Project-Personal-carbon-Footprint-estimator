@@ -17,7 +17,7 @@
 import { useMemo, useState } from "react";
 import allActivities from "../data/Activities/allActivities";
 import ActivityModal from "../components/ui/ActivityModal";
-import { api } from "../services/api"; // centralised wrapper (sends credentials + token)
+import { api } from "../services/api"; 
 import { useUnits } from "../context/UnitsContext";
 import { convertFromKg, formatEmissions } from "../utils/formatEmissions";
 
@@ -60,11 +60,11 @@ function LogActivity() {
     });
   }, [selectedCategory, searchTerm]);
 
-  // Live preview of total emissions based on current quantity (uses global units)
+  // Live preview of total emissions based on current quantity 
   const livePreview = useMemo(() => {
     if (!selectedActivity) return "";
     const qty = Number(quantity);
-    const efKgPerUnit = Number(selectedActivity.emissionFactor); // kg CO2e per unit
+    const efKgPerUnit = Number(selectedActivity.emissionFactor);
     if (!qty || !efKgPerUnit) return "";
     const totalKg = qty * efKgPerUnit;
     return formatEmissions(totalKg, units, 3);
@@ -82,7 +82,7 @@ function LogActivity() {
       category: selectedActivity.category,
       type: selectedActivity.type || "general",
       unit: selectedActivity.unit,
-      emission_factor: Number(selectedActivity.emissionFactor), // kg per unit (stored in kg server-side)
+      emission_factor: Number(selectedActivity.emissionFactor), // kg per unit
       quantity: Number(qty),
       occurred_at: new Date().toISOString().slice(0, 19).replace("T", " "), // MySQL DATETIME
       meta: {},
@@ -134,7 +134,7 @@ function LogActivity() {
 
   return (
     <div className="w-full text-fg">
-      {/* Sticky Header with category pills, search, and notice */}
+      {/* Sticky Header */}
         <div
           className="
             sticky top-[56px] md:top-0 z-25 relative isolate
@@ -146,7 +146,7 @@ function LogActivity() {
         <h1 className="text-2xl font-bold mb-2">Log Activity</h1>
         <p className="text-muted mb-4">Track your CO₂ emissions from daily actions.</p>
 
-        {/* Category filter pills - resets search and modal selections when switching */}
+        {/* Category filter pills, resets search and modal selections when switching */}
         <div className="flex flex-wrap gap-2 mb-2">
           {topLevelCategories.map((cat) => (
             <button
@@ -201,7 +201,7 @@ function LogActivity() {
         )}
       </div>
 
-      {/* Activity grid - keyboard accessible (Enter/Space) and shows selected styling */}
+      {/* Activity grid */}
       <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-1 px-4 sm:px-6 mt-4 mb-10">
         {filteredActivities.length > 0 ? (
           filteredActivities.map((activity) => (
@@ -234,7 +234,7 @@ function LogActivity() {
         )}
       </div>
 
-      {/* Activity modal - handles quantity input and submit; shows live or finalised emission calc */}
+      {/* Activity modal */}
       {selectedActivity && (
         <ActivityModal
           activity={selectedActivity}
@@ -242,7 +242,7 @@ function LogActivity() {
           setQuantity={setQuantity}
           onSubmit={handleSubmit}
           onClose={handleCloseModal}
-          calculated={calculated ?? livePreview} // prefer final saved value; else live preview
+          calculated={calculated ?? livePreview} 
           saving={saving}
           emissionFactorDisplay={
             selectedActivity?.emissionFactor != null

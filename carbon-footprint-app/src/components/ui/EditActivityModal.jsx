@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import Modal from "./Modal";
 
 export default function EditActivityModal({ open, activity, onCancel, onSave }) {
-  const [qty, setQty] = useState(""); // user-edited quantity value
+  const [qty, setQty] = useState(""); // user edited quantity value
   const [err, setErr] = useState(""); // validation error message
 
   useEffect(() => {
@@ -31,21 +31,21 @@ export default function EditActivityModal({ open, activity, onCancel, onSave }) 
   const submit = async () => {
     setErr("");
     const n = Number(qty);
-    // Guard: ensure value is a valid non-negative number
+    // Guard: ensure value is a valid non negative number
     if (Number.isNaN(n) || n < 0) {
       setErr("Quantity must be a non-negative number.");
       return;
     }
-    // Call parent-provided save handler with updated quantity
+    // Call parent provided save handler with updated quantity
     await onSave({ id: activity.id, quantity: n });
   };
 
-  // Don’t render anything if no activity object provided
+  // Dont render anything if no activity object provided
   if (!activity) return null;
 
   return (
     <Modal open={open} title="Edit activity" onClose={onCancel}>
-      {/* Read-only context block so users know what record they’re editing */}
+      {/* Read-only context block so users know what record theyre editing */}
       <div className="space-y-2 mb-3">
         <div className="text-sm text-muted">
           <span className="font-medium text-fg">
@@ -58,7 +58,7 @@ export default function EditActivityModal({ open, activity, onCancel, onSave }) 
           ) : null}
         </div>
 
-        {/* Unit and emission factor details (non-editable reference info) */}
+        {/* Unit and emission factor details */}
         <div className="text-xs text-muted">
           Unit: <span className="font-mono text-fg">{activity.unit}</span>{" "}
           &nbsp;|&nbsp; EF:{" "}
@@ -106,8 +106,4 @@ export default function EditActivityModal({ open, activity, onCancel, onSave }) 
     </Modal>
   );
 }
-
-
-
-
 

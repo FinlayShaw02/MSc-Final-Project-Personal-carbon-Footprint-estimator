@@ -4,7 +4,7 @@ require_once __DIR__ . '/config.php';
 /**
  * ============================================================
  *  File: friends_requests.php
- *  Endpoint: GET /friends_requests.php?type=incoming|outgoing
+ *  Endpoint: GET /friends_requests.php?type=incoming/outgoing
  *
  *  Description:
  *  Lists **pending** friend requests for the authenticated user.
@@ -32,7 +32,7 @@ $noFriendship = "NOT EXISTS (
 )";
 
 if ($type === 'incoming') {
-  // Incoming = requests *to me*. The "other" user is the requester.
+  // Incoming = requests to me. The other user is the requester.
   $sql = "SELECT fr.id,
                  fr.requester_id AS other_user_id,
                  u.name, u.email,
@@ -44,7 +44,7 @@ if ($type === 'incoming') {
   $params = [$me];
 
 } elseif ($type === 'outgoing') {
-  // Outgoing = requests *from me*. The "other" user is the addressee.
+  // Outgoing = requests from me. The other user is the addressee.
   $sql = "SELECT fr.id,
                  fr.addressee_id AS other_user_id,
                  u.name, u.email,

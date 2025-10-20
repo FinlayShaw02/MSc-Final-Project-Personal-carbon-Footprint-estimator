@@ -9,9 +9,9 @@
  *    submitting current_password, new_password, and confirm_password.
  *
  *  Notes:
- *    - Uses password_verify/password_hash (PASSWORD_DEFAULT).
+ *    - Uses password_verify/password_hash .
  *    - Does not change any other profile data or invalidate sessions;
- *      adjust as needed (e.g., rotate tokens, log-out others).
+ *      adjust as needed
  *
  *  Author: Finlay Shaw
  * ============================================================
@@ -26,17 +26,16 @@ header("Access-Control-Allow-Credentials: true");                   // allow coo
 header("Access-Control-Allow-Headers: Content-Type, Authorisation");// allow custom headers
 header("Access-Control-Allow-Methods: POST, OPTIONS");              // methods permitted
 
-/* --- Preflight (OPTIONS) short-circuit ----------------------------------- */
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
 
-/* --- Enforce POST only --------------------------------------------------- */
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); echo json_encode(['error'=>'Use POST']); exit; }
 
 try {
   /* --- Resolve authenticated user (will 401/exit if not logged in) ------- */
   $uid = current_user_id(); // should 401 + exit if not logged in
 
-  /* --- Parse JSON body (gracefully handle null/empty) -------------------- */
+  /* --- Parse JSON body -------------------- */
   $data = json_decode(file_get_contents('php://input'), true);
   $current = (string)($data['current_password'] ?? '');
   $next    = (string)($data['new_password'] ?? '');
@@ -67,7 +66,7 @@ try {
     http_response_code(401); echo json_encode(['error'=>'Current password is incorrect.']); exit;
   }
 
-  /* --- Prevent re-using the current password ----------------------------- */
+  /* --- Prevent reusing the current password ----------------------------- */
   if (password_verify($next, $hash)) {
     http_response_code(422); echo json_encode(['error'=>'New password must be different from current.']); exit;
   }

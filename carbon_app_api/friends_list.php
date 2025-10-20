@@ -17,7 +17,7 @@ require_once __DIR__ . '/config.php';
 
 $me = current_user_id(); // current authenticated user ID
 
-// Retrieve all friends from the v_user_friends view (joined with user data)
+// Retrieve all friends from the v_user_friends view
 $sql = '
   SELECT 
     u.id, 

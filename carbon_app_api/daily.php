@@ -25,7 +25,7 @@ try {
   $uid = current_user_id(); // 401 + exit if not logged in
 
   // ---- Helpers ------------------------------------------------
-  // Convert arbitrary input to 'Y-m-d H:i:s' or fall back safely.
+  // Convert input to 'Y-m-d H:i:s' or fall back to safe default.
   $toSqlDate = function ($v, $fallback) {
     if (!$v) return $fallback;
     $ts = strtotime($v);
@@ -34,7 +34,7 @@ try {
   };
 
   // ---- Query params -------------------------------------------
-  // Raw inputs from the query string (may be absent/empty).
+  // Raw inputs from the query string
   $fromRaw   = $_GET['from']     ?? null;
   $toRaw     = $_GET['to']       ?? null;
   $category  = $_GET['category'] ?? '';
@@ -56,7 +56,7 @@ try {
       AND occurred_at <  :to
   ";
 
-  // Optional category filter (exact match).
+  // Optional category filter
   if ($category !== '') {
     $sql .= " AND category = :category";
   }
@@ -76,8 +76,6 @@ try {
     $stmt->bindValue(':category', $category);
   }
   $stmt->execute();
-
-  // Return rows as JSON (uses default FETCH_ASSOC from config.php).
   $rows = $stmt->fetchAll();
   echo json_encode($rows);
 

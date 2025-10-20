@@ -16,8 +16,8 @@ require_once __DIR__ . '/config.php';
  * ============================================================
  */
 
-$me   = current_user_id();        // Authenticated user ID (401 on failure)
-$body = json_body();              // Parse JSON request body (assoc array)
+$me   = current_user_id();        
+$body = json_body();              
 $friend = (int)($body['friend_id'] ?? 0); // Friend to remove
 
 // Validate target: must be a positive integer and not the current user
@@ -29,7 +29,7 @@ $stmt = $pdo->prepare('DELETE FROM friendships
                          AND user_id_high = GREATEST(?,?)');
 $stmt->execute([$me,$friend,$me,$friend]);
 
-// If no rows were affected, the users were not friends (or already removed)
+// If no rows were affected, the users were not friends 
 if ($stmt->rowCount() === 0) fail(404, 'Not friends');
 
 // Success payload

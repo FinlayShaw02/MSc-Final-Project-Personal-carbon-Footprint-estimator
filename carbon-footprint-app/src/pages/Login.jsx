@@ -16,7 +16,7 @@ import LoginForm from "../components/auth/LoginForm";
 
 export default function Login() {
   return (
-    // Full-viewport container to center content, with app background color
+    // Full viewport container to center content, with app background color
     <div className="min-h-screen flex items-center justify-center bg-bg px-4">
       {/* Card wrapper: responsive max widths + surface theme + border/shadow */}
       <div className="w-full max-w-md md:max-w-lg lg:max-w-xl bg-surface text-fg p-6 md:p-10 rounded-xl border border-border shadow-subtle">

@@ -7,13 +7,13 @@
  *  Purpose:
  *    Create or remove a block between the current user and another user.
  *    Side-effects on "block":
- *      - Ensures a block row exists (idempotent via INSERT IGNORE)
+ *      - Ensures a block row exists 
  *      - Removes any existing friendship (friendships table stores pairs as low/high)
  *      - Deletes any pending friend requests between the two users
  *
  *  Notes:
- *    - Blocking is one-way (blocker_id -> blocked_id).
- *    - Friendship rows are normalised as (user_id_low, user_id_high).
+ *    - Blocking is one way
+ *    - Friendship rows are normalised
  *
  *  Author: Finlay Shaw
  * ============================================================
@@ -21,7 +21,6 @@
 
 require_once __DIR__ . '/config.php';
 
-// Resolve the authenticated user (helper will emit 401/exit if not logged in)
 $me = current_user_id();
 
 // Enforce POST only
@@ -31,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   exit;
 }
 
-// Read JSON body (fallback to empty array on decode failure)
 $body    = json_decode(file_get_contents('php://input'), true) ?: [];
 $otherId = (int)($body['user_id'] ?? 0);
 $action  = strtolower((string)($body['action'] ?? ''));
@@ -44,7 +42,7 @@ if ($action === 'block') {
   // 1) Create block row; INSERT IGNORE makes the operation idempotent
   $pdo->prepare("INSERT IGNORE INTO blocks (blocker_id, blocked_id) VALUES (?, ?)")->execute([$me, $otherId]);
 
-  // 2) Remove friendship if present (friendship pair is stored as low/high ids)
+  // 2) Remove friendship if present
   $low  = min($me, $otherId);
   $high = max($me, $otherId);
   $pdo->prepare("DELETE FROM friendships WHERE user_id_low=? AND user_id_high=?")->execute([$low, $high]);
@@ -62,7 +60,7 @@ if ($action === 'block') {
 }
 
 if ($action === 'unblock') {
-  // Remove the block row if it exists (idempotent)
+  // Remove the block row if it exists
   $pdo->prepare("DELETE FROM blocks WHERE blocker_id=? AND blocked_id=?")->execute([$me, $otherId]);
   echo json_encode(['ok'=>true, 'blocked'=>false]);
   exit;

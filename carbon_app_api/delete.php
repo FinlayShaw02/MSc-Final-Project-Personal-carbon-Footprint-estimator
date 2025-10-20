@@ -12,7 +12,7 @@
  *  or a JSON request body: { "id": 123 }.
  *
  *  Notes:
- *  - Uses LIMIT 1 for safety/perf; guarded by user_id to prevent cross-user deletes.
+ *  - Uses LIMIT 1 for safety/perf; guarded by user_id to prevent cross user deletes.
  *  - Keeps error messages generic for production; uncomment detail while debugging.
  *
  *  Author: Finlay Shaw
@@ -64,7 +64,7 @@ try {
 
   // ----------------------------------------------------------------
   // Perform the delete only if the row belongs to the current user.
-  // LIMIT 1 prevents accidental multi-row changes.
+  // LIMIT 1 prevents accidental multi row changes.
   // ----------------------------------------------------------------
   $stmt = $pdo->prepare(
     "DELETE FROM user_activities
@@ -73,14 +73,13 @@ try {
   );
   $stmt->execute([":id" => $id, ":uid" => $uid]);
 
-  // If no row was affected, either it didn't exist or wasn't owned by the user.
+  // If no row was affected, either it didnt exist or wasnt owned by the user.
   if ($stmt->rowCount() === 0) {
     http_response_code(404);
     echo json_encode(["error" => "Not found"]);
     exit;
   }
-
-  // Success payload mirrors other endpoints' 'ok' convention.
+  
   echo json_encode(["ok" => true, "deleted" => 1, "id" => $id]);
 
 } catch (Throwable $e) {

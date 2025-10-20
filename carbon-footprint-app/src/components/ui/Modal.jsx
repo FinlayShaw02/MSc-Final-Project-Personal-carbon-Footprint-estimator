@@ -14,7 +14,7 @@
  */
 
 export default function Modal({ open, title, children, onClose }) {
-  // Don’t render anything if the modal isn’t open
+  // Don’t render anything if the modal isnt open
   if (!open) return null;
 
   return (

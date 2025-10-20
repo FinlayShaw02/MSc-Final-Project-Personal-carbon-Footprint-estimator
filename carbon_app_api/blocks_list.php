@@ -11,7 +11,7 @@
  *
  *  Notes:
  *  - Used to display block management lists (blocked users + awareness list).
- *  - Data is read-only; unblocking handled by separate endpoint.
+ *  - Data is read only; unblocking handled by separate endpoint.
  *
  *  Author: Finlay Shaw
  * ============================================================
@@ -19,11 +19,11 @@
 
 require_once __DIR__ . '/config.php';
 
-// Ensure user is authenticated, helper will exit(401) if not logged in
+// Ensure user is authenticated, helper will exit if not logged in
 $me = current_user_id();
 
 /* ------------------------------------------------------------
- * 1. Get list of users I have blocked (outgoing)
+ * 1. Get list of users I have blocked 
  * ------------------------------------------------------------ */
 $stmt = $pdo->prepare("
   SELECT u.id, u.name, u.email, b.created_at
@@ -36,7 +36,7 @@ $stmt->execute([$me]);
 $blocked = $stmt->fetchAll();
 
 /* ------------------------------------------------------------
- * 2. Get list of users who have blocked me (incoming)
+ * 2. Get list of users who have blocked me
  * ------------------------------------------------------------ */
 $stmt = $pdo->prepare("
   SELECT u.id, u.name, u.email, b.created_at

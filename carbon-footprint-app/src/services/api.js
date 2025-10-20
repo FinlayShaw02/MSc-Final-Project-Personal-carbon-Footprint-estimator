@@ -66,7 +66,7 @@ export async function apiRequest(endpoint, options = {}) {
 }
 
 /* ------------------------------------------------------------
- *  Shorthand API methods (with `params` support)
+ *  Shorthand API methods
  * ------------------------------------------------------------ */
 export const api = {
   get:    (endpoint, opts = {})            => apiRequest(endpoint, { method: "GET",    ...opts }),

@@ -49,12 +49,12 @@ export default function Sidebar({ isOpen, onClose }) {
         onClick={onClose} // clicking overlay closes drawer
       />
 
-      {/* Sidebar panel (slides in/out on mobile, fixed on desktop) */}
+      {/* Sidebar panel */}
       <aside
         className={classNames(
           "fixed top-0 left-0 h-full w-64 bg-surface text-fg border-r border-border shadow-subtle z-40 transform transition-transform duration-200",
           {
-            "-translate-x-full": !isOpen, // hidden offscreen (mobile)
+            "-translate-x-full": !isOpen, // hidden offscreen 
             "translate-x-0": isOpen,       // visible when open
             "md:translate-x-0 md:block": true, // always visible on md+
           }

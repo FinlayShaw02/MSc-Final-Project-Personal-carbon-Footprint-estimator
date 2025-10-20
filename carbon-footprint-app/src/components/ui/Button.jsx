@@ -17,13 +17,13 @@ import classNames from "classnames";
 
 export default function Button({
   children,
-  variant = "primary",  // visual style of button ("primary", "secondary", "danger", "ghost")
+  variant = "primary",  // visual style of button 
   isLoading = false,     // shows spinner when true
   disabled = false,      // disables button interaction
   onClick,
   type = "button",
   className,
-  ...props               // allows passing extra props (e.g., aria-label, data-*)
+  ...props               // allows passing extra props 
 }) {
   const isDisabled = Boolean(isLoading) || Boolean(disabled); // disable if either loading or disabled
 
@@ -32,7 +32,7 @@ export default function Button({
     "px-4 py-2 rounded-lg font-semibold transition-all w-full " +
     "focus:outline-none focus:ring-1 focus:ring-primary";
 
-  // Normal visual variants — color schemes using theme tokens
+  // Normal visual variants color schemes using theme tokens
   const variants = {
     primary:
       "bg-primary text-primaryContrast border border-primary hover:opacity-90",
@@ -44,7 +44,7 @@ export default function Button({
       "bg-transparent text-fg hover:bg-surfaceVariant", // no fill until hover
   };
 
-  // Disabled state styles for each variant — maintain contrast but block interaction
+  // Disabled state styles for each variant maintain contrast but block interaction
   const disabledVariants = {
     primary:
       "bg-primary text-primaryContrast opacity-60 cursor-not-allowed",
@@ -57,7 +57,7 @@ export default function Button({
   };
 
   // Spinner icon shown while loading
-  // Uses current text color (border-current) for consistent theme appearance
+  // Uses current text color for consistent theme appearance
   const spinner =
     "animate-spin mr-2 inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full";
 
@@ -73,7 +73,7 @@ export default function Button({
       )}
       {...props}
     >
-      {/* Optional loading spinner (appears before label text) */}
+      {/* Optional loading spinner */}
       {isLoading && <span className={spinner} aria-hidden="true" />}
 
       {/* Button label or children content */}

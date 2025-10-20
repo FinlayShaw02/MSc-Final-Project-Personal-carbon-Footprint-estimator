@@ -21,8 +21,8 @@ import {
 export default function ThemeSelect({ className = "", onChange }) {
   const [open, setOpen] = useState(false);             // dropdown open/closed state
   const [value, setValue] = useState(getSavedTheme()); // current theme value
-  const [activeIndex, setActiveIndex] = useState(-1);  // highlighted option (keyboard)
-  const rootRef = useRef(null);                        // wrapper for outside-click detection
+  const [activeIndex, setActiveIndex] = useState(-1);  // highlighted option
+  const rootRef = useRef(null);                        // wrapper for outside click detection
   const listRef = useRef(null);                        // <ul> element for focus and keyboard nav
 
   // Resolve currently selected theme object

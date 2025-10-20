@@ -17,12 +17,12 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { api } from "../services/api";
-import { useUnits } from "../context/UnitsContext"; // 👈 add this
+import { useUnits } from "../context/UnitsContext";
 
 /* ---------- helpers ---------- */
 const DAY_MS = 86400000;
 
-// Format Date -> "YYYY-MM-DD" (for inputs and API params)
+// Format Date -> "YYYY-MM-DD"
 const fmtDate = (d) => {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -30,14 +30,14 @@ const fmtDate = (d) => {
   return `${y}-${m}-${dd}`;
 };
 
-// Pure add days helper (doesn't mutate original)
+// Pure add days helper 
 const addDays = (d, n) => {
   const x = new Date(d);
   x.setDate(x.getDate() + n);
   return x;
 };
 
-// Number formatters (keep generic; unit-aware wrappers come later)
+// Number formatters
 const nf2 = new Intl.NumberFormat(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
 const nf3 = new Intl.NumberFormat(undefined, { maximumFractionDigits: 3, minimumFractionDigits: 3 });
 
@@ -169,7 +169,7 @@ function Progress({ value, max }) {
   );
 }
 
-// One leaderboard row card (rank + name + metrics)
+// One leaderboard row card
 // Accept unit-aware formatters via props
 function Row({ rank, name, metrics, fmtMass, fmtPerDay, unitLabel }) {
   const { total, avg_filled, active_days, window_days, active_avg, prev_active_avg } = metrics;
@@ -283,7 +283,7 @@ const API = {
 
 /* ---------- Page ---------- */
 export default function Gamification() {
-  const { units } = useUnits(); // 👈 read current units ("kg" | "lb")
+  const { units } = useUnits(); 
 
   // conversion factor from kg -> display units
   const { massFactor, unitLabel } = useMemo(() => {

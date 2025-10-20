@@ -6,7 +6,7 @@
  *
  *  Purpose:
  *  Returns a paginated list of the authenticated user's activity
- *  records within an (inclusive start, exclusive end) datetime range,
+ *  records within a datetime range,
  *  with optional filtering by category and fuzzy search across
  *  activity_name, category and type.
  *
@@ -25,8 +25,7 @@ if (isset($pdo) && $pdo instanceof PDO) {
 }
 
 try {
-  // Resolve the current user (401 + exit inside helper on failure)
-  $uid = current_user_id(); // 401 + exit if not logged in
+  $uid = current_user_id(); 
 
   /* ---------- Helpers ---------- */
   // Normalise date-ish inputs into 'Y-m-d H:i:s' or fall back to a safe default
@@ -38,7 +37,7 @@ try {
   };
 
   /* ---------- Query params ---------- */
-  // Raw inputs from query string (all optional)
+  // Raw inputs from query string
   $fromRaw   = $_GET['from']     ?? null;
   $toRaw     = $_GET['to']       ?? null;
   $category  = isset($_GET['category']) ? (string)$_GET['category'] : '';
@@ -46,11 +45,11 @@ try {
   $limit     = (int)($_GET['limit']  ?? 50);
   $offset    = (int)($_GET['offset'] ?? 0);
 
-  // Date bounds: inclusive start, exclusive end (common for time buckets)
+  // Date bounds: inclusive start, exclusive end 
   $from = $toSqlDate($fromRaw, '1970-01-01 00:00:00');
   $to   = $toSqlDate($toRaw,   '2100-01-01 00:00:00');
 
-  // Pagination safety clamps (later interpolated into SQL LIMIT/OFFSET)
+  // Pagination safety clamps
   if ($limit < 1)   $limit = 1;
   if ($limit > 200) $limit = 200;
   if ($offset < 0)  $offset = 0;
@@ -59,7 +58,7 @@ try {
   // Escape SQL LIKE wildcards using '!' as ESCAPE char:
   //   '!' -> '!!', '%' -> '!%', '_' -> '!_'
   $q = $qRaw !== '' ? str_replace(['!', '%', '_'], ['!!', '!%', '!_'], $qRaw) : '';
-  // Ignore extremely short search terms (noise)
+  // Ignore extremely short search terms 
   if ($q !== '' && strlen($q) < 2) $q = '';
 
   /* ---------- Build SQL ---------- */
@@ -84,11 +83,11 @@ try {
       AND occurred_at <  :to
   ";
 
-  // Optional exact category filter (bound safely)
+  // Optional exact category filter 
   if ($category !== '') {
     $sql .= " AND category = :category";
   }
-  // Optional fuzzy search across three columns with ESCAPE '!'
+
   if ($q !== '') {
     // Using ESCAPE '!' ensures our manual escapes are honored regardless of sql_mode
     $sql .= " AND (
@@ -98,7 +97,7 @@ try {
     )";
   }
 
-  // Deterministic ordering (newest first), then bounded pagination
+  // Deterministic ordering (newest first)
   // Note: LIMIT/OFFSET are safe after clamping above
   $sql .= " ORDER BY occurred_at DESC, id DESC LIMIT $offset, $limit";
 
@@ -124,11 +123,11 @@ try {
   $stmt->execute();
   $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  // Emit JSON (UTF-8 kept as-is)
+  
   echo json_encode($rows, JSON_UNESCAPED_UNICODE);
 
 } catch (Throwable $e) {
-  // Server-side log for diagnostics (no PII)
+  // Server-side log for diagnostics
   error_log("activities.php error: " . $e->getMessage());
   http_response_code(500);
 

@@ -38,7 +38,7 @@ try {
     exit;
   }
 
-  // Required fields (do NOT include user_id)
+  // Required fields (do not include user_id)
   $required = [
     'activity_id', 'activity_name',
     'category', 'type', 'unit',
@@ -52,7 +52,7 @@ try {
     }
   }
 
-  // Coerce / validate
+  // validate
   $activity_id     = trim((string)$data['activity_id']);
   $activity_name   = trim((string)$data['activity_name']);
   $category        = trim((string)$data['category']);
@@ -79,7 +79,7 @@ try {
     exit;
   }
 
-  // Normalise occurred_at → 'Y-m-d H:i:s'
+  // Normalise occurred_at 'Y-m-d H:i:s'
   $ts = strtotime($occurred_raw);
   if ($ts === false) {
     http_response_code(400);

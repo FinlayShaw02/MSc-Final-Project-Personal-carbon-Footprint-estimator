@@ -188,7 +188,7 @@ function json_body(): array {
 }
 
 /**
- * Emit a standard success envelope.
+ * a standard success.
  * Example: ok(['user' => $user]);
  */
 function ok(array $data = []): void {
@@ -196,7 +196,7 @@ function ok(array $data = []): void {
 }
 
 /**
- * Emit an error with HTTP code and stop execution.
+ * an error with HTTP code and stop execution.
  * Example: fail(422, 'Invalid input', ['field' => 'email']);
  */
 function fail(int $code, string $msg, array $extra = []): void {
@@ -215,8 +215,7 @@ function current_user_id(): int {
 }
 
 /**
- * Ensure the incoming request uses the expected HTTP verb.
- * Example: require_method('POST');
+ * Ensure the incoming request uses the expected HTTP method.
  */
 function require_method(string $method): void {
   if (strcasecmp($_SERVER['REQUEST_METHOD'] ?? '', $method) !== 0) {

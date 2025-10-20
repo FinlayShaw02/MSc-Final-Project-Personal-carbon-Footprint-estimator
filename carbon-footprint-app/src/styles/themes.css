@@ -38,7 +38,7 @@
   --error-bg: 254 242 242;           /* Soft red background */
   --error-fg: 153 27 27;             /* Deep red text */
 
-  /* Shadow transparency (used in Tailwind shadows) */
+  /* Shadow transparency  */
   --shadow: 0 0 0 / 0.08;
 
   /* Used globally for hover/focus outlines */
@@ -54,14 +54,14 @@ html.theme-dark, :root.theme-dark {
   --surface-variant: 38 38 38;       /* Alt surface for contrast */
 
   /* Text colors */
-  --fg: 236 236 236;                 /* Primary text (light gray) */
+  --fg: 236 236 236;                 /* Primary text */
   --muted-fg: 160 160 160;           /* Secondary text */
 
   /* Borders and dividers */
   --border: 64 64 64;                /* Subtle neutral border */
 
   /* Accent / brand color */
-  --primary: 34 197 94;              /* Emerald (bright on dark) */
+  --primary: 34 197 94;              /* Emerald */
   --primary-contrast: 23 23 23;      /* Dark text on light accent */
 
   /* Success and error states */
@@ -145,7 +145,7 @@ html.theme-gray,
 
   /* Borders and accent */
   --border: 112 112 112;             /* Subtle line */
-  --primary: 34 197 94;              /* Emerald accent (brand color) */
+  --primary: 34 197 94;              /* Emerald accent */
   --primary-contrast: 20 24 20;      /* On-accent text */
 
   /* States */
@@ -171,7 +171,7 @@ html.theme-contrast, :root.theme-contrast {
   --muted-fg: 230 230 230;
   --border: 255 255 255;             /* Visible white borders */
 
-  /* Bright yellow accent (high visibility) */
+  /* Bright yellow accent  */
   --primary: 255 255 0;
   --primary-contrast: 0 0 0;         /* Black text on yellow */
 

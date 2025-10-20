@@ -16,16 +16,16 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, useId } from "react";
 
 export default function FrostedSelect({
-  value,                  // current selected value
-  onChange,               // callback(newValue)
-  options = [],           // array of strings or { value, label }
+  value,                  
+  onChange,               
+  options = [],           
   placeholder = "Select…",
   disabled = false,
   className = "",
   buttonClassName = "",
   menuClassName = "",
-  matchTriggerWidth = true,  // whether dropdown should match button width
-  placement = "bottom-left", // "bottom-left" | "bottom-right"
+  matchTriggerWidth = true,  
+  placement = "bottom-left", 
 }) {
   // Normalise options to { value, label }
   const norm = useMemo(
@@ -39,10 +39,10 @@ export default function FrostedSelect({
   );
 
   const [open, setOpen] = useState(false);  // dropdown open/closed
-  const [active, setActive] = useState(-1); // keyboard-highlighted index
+  const [active, setActive] = useState(-1); // keyboard highlighted index
 
   // Refs
-  const wrapRef = useRef(null); // root wrapper (for outside-click detection)
+  const wrapRef = useRef(null); // wrapper 
   const btnRef = useRef(null);  // trigger button
   const listRef = useRef(null); // listbox element
 
@@ -105,7 +105,7 @@ export default function FrostedSelect({
     setOpen(false);
   }
 
-  // Trigger key handling (open with Enter/Space/ArrowDown)
+  // Trigger key handling
   function onButtonKeyDown(e) {
     if (disabled) return;
     if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
@@ -114,7 +114,7 @@ export default function FrostedSelect({
     }
   }
 
-  // Listbox key handling (Escape, arrows, Home/End, Enter/Space to select)
+  // Listbox key handling
   function onListKeyDown(e) {
     if (e.key === "Escape") return setOpen(false);
     if (!norm.length) return;
@@ -192,7 +192,7 @@ export default function FrostedSelect({
           className={[
             "absolute z-50 mt-2 max-h-72 overflow-auto rounded-xl",
             "border border-border/70 outline-none shadow-lg",
-            // frosted background (with a graceful fallback)
+            // frosted background 
             "bg-surface/70 backdrop-blur-md backdrop-saturate-150",
             "[@supports(backdrop-filter:blur(0))]:bg-surface/55",
             alignClass,

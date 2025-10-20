@@ -21,7 +21,7 @@ const fmtShort = new Intl.DateTimeFormat(undefined, { month: "short", day: "nume
 
 /**
  * Normalise incoming data into sorted { d: Date, y: number } points.
- * Accepts objects with x|date and y|value fields, filters invalid rows,
+ * Accepts objects with x date and y value fields, filters invalid rows,
  * and sorts chronologically.
  */
 function normaliseData(data) {
@@ -37,7 +37,7 @@ function normaliseData(data) {
 }
 
 /**
- * Generate `count+1` linearly spaced tick values between min and max.
+ * Generate tick values between min and max.
  * Falls back to repeated min if range is degenerate.
  */
 function niceTicks(min, max, count = 4) {
@@ -49,7 +49,7 @@ function niceTicks(min, max, count = 4) {
 export function EmissionsLineGraph({ data, title, units = "kg", height = 260 }) {
   const [hover, setHover] = useState(null); // index of hovered point (for tooltip)
 
-  // Prepare points + compute domain with padded Y-range for aesthetics
+  /* ----- data processing ----- */
   const { points, xMin, xMax, yMin, yMax } = useMemo(() => {
     const pts = normaliseData(data);
     if (!pts.length) return { points: [], xMin: 0, xMax: 1, yMin: 0, yMax: 1 };
@@ -68,7 +68,7 @@ export function EmissionsLineGraph({ data, title, units = "kg", height = 260 }) 
   }, [data]);
 
   /* ----- layout ----- */
-  const W = 720; // internal viewBox width (responsive via viewBox scaling)
+  const W = 720; // internal viewBox width
   const H = height;
   // margins; extra right padding prevents last x-label clipping
   const M = { top: 24, right: 28, bottom: 30, left: 44 };
@@ -96,9 +96,9 @@ export function EmissionsLineGraph({ data, title, units = "kg", height = 260 }) 
   }, [points, xMin, xMax, yMin, yMax, innerW, innerH]);
 
   /* ----- ticks ----- */
-  const yTicks = niceTicks(yMin, yMax, 4); // 5 y-ticks (including min/max)
+  const yTicks = niceTicks(yMin, yMax, 4); // 5 y-ticks 
 
-  // Only render first & last x-ticks (readable, avoids crowding)
+  // Only render first & last x-ticks 
   const xTicks = useMemo(() => {
     if (!points.length) return [];
     if (points.length === 1) return [{ i: 0, p: points[0] }];
@@ -193,7 +193,7 @@ export function EmissionsLineGraph({ data, title, units = "kg", height = 260 }) 
             );
           })()}
 
-          {/* points + hover target (larger invisible circle for easier hit area) */}
+          {/* points + hover target */}
           {points.map((p, i) => {
             const x = xScale(p.d.getTime());
             const y = yScale(p.y);
@@ -212,7 +212,7 @@ export function EmissionsLineGraph({ data, title, units = "kg", height = 260 }) 
             );
           })}
 
-          {/* tooltip (clamped within plot area) */}
+          {/* tooltip */}
           {hover != null && points[hover] && (() => {
             const p = points[hover];
             const x = xScale(p.d.getTime());

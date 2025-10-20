@@ -21,7 +21,7 @@ INPUT_CSV = "pre-processed-defra.csv"   # input: cleaned DEFRA factors
 OUTPUT_DIR = "Activities"               # output folder for JS modules
 SOURCE_LABEL = "DEFRA 2025"             # source label written into JS objects
 
-# Categories to exclude entirely (case-insensitive match after normalisation)
+# Categories to exclude entirely
 EXCLUDED_CATEGORIES = [
     "WTT- fuels", "WTT- heat and steam", "WTT- UK electricity",
     "Transmission and distribution", "Heat and steam", "UK electricity T&D for EVs",
@@ -58,7 +58,7 @@ UNIT_NORMALISATIONS = {
     "fte working hour": "FTE working hour",
 }
 
-# Keywords used to detect fuel-specific delivery vehicle rows
+# Keywords used to detect fuel specific delivery vehicle rows
 FUEL_KEYWORDS = ["electric", "diesel", "petrol", "plug-in hybrid", "plugin hybrid", "cng", "lpg"]
 
 # Canonical names for passenger vehicle types
@@ -77,7 +77,7 @@ VEHICLE_TERMS = {
     "lpg": "LPG car",
 }
 
-# Regex that marks labels as useless (to be dropped) unless in keeplist
+# Regex that marks labels as useless unless in keeplist
 USELESS_LABEL_RE = r'(?i)^\s*(unspecified|unknown|na|n/?a|not\s+applicable|not\s+specified|none)\s*$'
 
 # =========================
@@ -210,7 +210,7 @@ df = df[~df["_catnorm"].isin(excluded)].drop(columns=["_catnorm"])
 group_cols = ["Category", "Label", "Unit"]
 df_grouped = df.groupby(group_cols, as_index=False)["EmissionFactor"].mean()
 
-# Convert miles -> km for travel-related rows
+# Convert miles -> km for travel related rows
 def convert_miles_to_km(row):
     unit = str(row["Unit"]).strip().lower()
     if unit == "miles":
@@ -243,7 +243,7 @@ def convert_to_kgkm_if_delivery(row):
     return row
 df_grouped = df_grouped.apply(convert_to_kgkm_if_delivery, axis=1)
 
-# === Merge all electric van flavors into a single "electric van" bucket (averaged) ===
+# === Merge all electric van flavors into a single "electric van" bucket ===
 def merge_electric_vans(row):
     if row["Category"].strip().lower() == "delivery vehicles":
         if any(keyword in row["Label"].lower() for keyword in [
@@ -253,7 +253,7 @@ def merge_electric_vans(row):
     return row
 df_grouped = df_grouped.apply(merge_electric_vans, axis=1)
 
-# Re-aggregate to average merged electric van rows
+
 df_grouped = (
     df_grouped
     .groupby(["Category", "Label", "Unit"], as_index=False)["EmissionFactor"]
@@ -273,7 +273,7 @@ df_grouped["EmissionFactor"] = df_grouped["EmissionFactor"].round(8)
 df_grouped = df_grouped.drop_duplicates(subset=["Category", "Label", "Unit", "EmissionFactor"])
 
 # =========================
-# Friendly names (rule engine)
+# Friendly names
 # =========================
 def friendly_name(row):
     """Generate a human-readable activity title using rules + fallbacks."""
@@ -287,7 +287,7 @@ def friendly_name(row):
     else:
         label_clean = label
 
-    # Passenger vehicles (various fuel types)
+    # Passenger vehicles by fuel type
     if "passenger vehicle" in category:
         for key, nice in VEHICLE_TERMS.items():
             if key in label:
@@ -355,7 +355,7 @@ def format_js(row):
         "emissionFactor": round(float(row["EmissionFactor"]), 8),
         "source": SOURCE_LABEL,
     }
-    # Delivery vehicles expressed as kg·km require two inputs in UI (weight & distance)
+    # Delivery vehicles expressed as kg·km require two inputs in UI
     if str(row["Unit"]).lower() == "kg·km":
         js_obj["userInputs"] = ["weight_kg", "distance_km"]
     return js_obj
@@ -369,7 +369,7 @@ print(f" Final rows: {len(df_grouped)}")
 print(f" Unique categories: {df_grouped['Category'].nunique()}")
 print(" Category breakdown:\n", df_grouped["Category"].value_counts())
 
-# Write one JS module per category: <categorySlug>Activities.js
+# Write one JS module per category
 written = []
 for category, group in df_grouped.groupby("Category"):
     cat_slug = category_slug(category)

@@ -49,7 +49,7 @@ try {
     exit;
   }
 
-  // Look up user by email (unique)
+  // Look up user by email
   $stmt = $pdo->prepare('SELECT id, name, email, password FROM users WHERE email = :email LIMIT 1');
   $stmt->execute([':email' => $email]);
   $user = $stmt->fetch();
@@ -65,7 +65,7 @@ try {
   session_regenerate_id(true);
   $_SESSION['user_id'] = (int)$user['id'];
 
-  // Minimal user payload (never include password)
+  // Minimal user payload
   echo json_encode([
     'success' => true,
     'user' => [

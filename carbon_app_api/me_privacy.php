@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   exit;
 }
 
-// ----- Update visibility (POST or PATCH) -----
+// ----- Update visibility -----
 if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PATCH') {
   // Expect JSON like { "public": true|false }
   $body = json_body();

@@ -11,13 +11,6 @@ require __DIR__ . '/config.php';
  *    CRUD-style API for user emission goals (caps).
  *    Currently supports: GET (list), POST (create), DELETE (remove).
  *
- *  Notes:
- *    - CORS, content-type, and session settings are applied in config.php.
- *    - Response shapes:
- *        GET     -> JSON array of rows (unchanged for frontend compatibility)
- *        POST    -> { ok: true, id: <new id> }
- *        DELETE  -> { ok: true }
- *
  *  Author: Finlay Shaw (revised)
  * ============================================================
  */
@@ -115,8 +108,6 @@ try {
 
   /* ============================================================
    * POST /goals.php
-   *  Body: { name, period: "week"|"month"|"year", category?: "all"|null|slug, target_kg, is_active?: 0|1 }
-   *  Returns: { ok: true, id }
    * ============================================================ */
   if ($method === 'POST') {
     $data = json_body();
@@ -161,8 +152,6 @@ try {
 
   /* ============================================================
    * DELETE /goals.php?id=123
-   *  - Also accepts JSON body: { "id": 123 }
-   *  Returns: { ok: true }
    * ============================================================ */
   if ($method === 'DELETE') {
     $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;

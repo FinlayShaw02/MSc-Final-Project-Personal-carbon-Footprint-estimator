@@ -5,7 +5,7 @@
  *  Endpoint: /register.php
  *
  *  Purpose:
- *    Create a new user account and start a session (auto-login)
+ *    Create a new user account and start a session (auto login)
  *    on success. Intended for use by the public signup form.
  *
  *  Author: Finlay Shaw
@@ -37,7 +37,7 @@ try {
     exit;
   }
 
-  // Basic validation (presence + simple format checks)
+  // Basic validation
   $name  = trim((string)($data['name'] ?? ''));
   $email = strtolower(trim((string)($data['email'] ?? '')));
   $pass  = (string)($data['password'] ?? '');
@@ -52,7 +52,7 @@ try {
     echo json_encode(['error' => 'Invalid email']);
     exit;
   }
-  // (Optional) enforce minimal password rules
+  // enforce minimal password rules
   if (strlen($pass) < 8) {
     http_response_code(400);
     echo json_encode(['error' => 'Password must be at least 8 characters']);
@@ -68,7 +68,7 @@ try {
     exit;
   }
 
-  // Create user (password hashed with current default algorithm)
+  // Create user
   $hash = password_hash($pass, PASSWORD_DEFAULT);
   $ins = $pdo->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
   $ins->execute([
@@ -79,7 +79,7 @@ try {
 
   $userId = (int)$pdo->lastInsertId();
 
-  // Auto-login: rotate session id and set current user
+  // Auto-login
   session_regenerate_id(true);
   $_SESSION['user_id'] = $userId;
 
@@ -94,7 +94,6 @@ try {
   ]);
 
 } catch (Throwable $e) {
-  // Avoid leaking internals; log server-side if needed
   http_response_code(500);
   echo json_encode([
     'error' => 'Server error',

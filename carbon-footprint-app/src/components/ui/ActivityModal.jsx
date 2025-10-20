@@ -6,7 +6,7 @@
  *  Description:
  *  Modal for logging a specific activity with its emission factor.
  *  Displays activity details, collects user inputs, previews the
- *  calculated emissions in the user’s preferred units and submits
+ *  calculated emissions in the users preferred units and submits
  *  a validated quantity back to the parent.
  *
  *  Author: Finlay Shaw
@@ -18,7 +18,7 @@ import { useUnits } from "../../context/UnitsContext";
 import { convertFromKg, formatEmissions } from "../../utils/formatEmissions";
 
 function ActivityModal({ activity, onSubmit, onClose, calculated }) {
-  const { units } = useUnits(); // "kg" or "lb" (user-selected display units)
+  const { units } = useUnits(); // "kg" or "lb" for display
   const [inputs, setInputs] = useState({}); // dynamic input fields, keyed by userInputs or "quantity"
 
   useEffect(() => {
@@ -57,14 +57,14 @@ function ActivityModal({ activity, onSubmit, onClose, calculated }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const quantity = parsedQuantity;
-    if (!quantity || quantity <= 0) return; // guard: require a positive value
+    if (!quantity || quantity <= 0) return;
     onSubmit(quantity);
   };
 
   // Emission factor is stored in kg per unit on the activity object
   const efKgPerUnit = Number(activity?.emissionFactor || 0);
 
-  // Convert the emission factor to the user's display units for the UI (kg/unit -> lb/unit if needed)
+  // Convert the emission factor to the users display units for the UI
   const factorDisplay = useMemo(() => {
     const v = convertFromKg(efKgPerUnit, units);
     return Number.isFinite(v) ? v.toFixed(4) : "0.0000";
@@ -82,7 +82,7 @@ function ActivityModal({ activity, onSubmit, onClose, calculated }) {
   return (
     <div className="fixed inset-0 z-40 bg-bg/60 backdrop-blur-sm flex items-center justify-center">
       <div className="bg-surface text-fg border border-border p-6 rounded-xl shadow-subtle max-w-sm w-full relative">
-        {/* Close button (top-right) */}
+        {/* Close button  */}
         <button
           onClick={onClose}
           className="absolute top-2 right-2 rounded-md px-2 py-1 text-muted hover:bg-surfaceVariant"
@@ -95,7 +95,7 @@ function ActivityModal({ activity, onSubmit, onClose, calculated }) {
         {/* Activity title */}
         <h2 className="text-lg font-semibold mb-1">{activity.activity}</h2>
 
-        {/* Unit + per-unit emission factor (displayed in selected units) */}
+        {/* Unit + per-unit emission factor */}
         <p className="text-sm text-muted mb-4">
           Unit: <strong className="text-fg">{activity.unit}</strong>{" "}
           <span className="text-primary font-medium">
@@ -103,7 +103,7 @@ function ActivityModal({ activity, onSubmit, onClose, calculated }) {
           </span>
         </p>
 
-        {/* Dynamic form (one or many inputs based on activity.userInputs) */}
+        {/* Dynamic form */}
         <form onSubmit={handleSubmit} className="space-y-3">
           {(activity.userInputs || ["quantity"]).map((inputName) => (
             <div key={inputName}>
@@ -124,7 +124,7 @@ function ActivityModal({ activity, onSubmit, onClose, calculated }) {
             </div>
           ))}
 
-          {/* Preview total (shows live, or a post-submit value if parent passes `calculated`) */}
+          {/* Preview total */}
           {(calculated || livePreview) && (
             <div className="text-sm">
               ≈ <span className="font-semibold text-fg">{calculated || livePreview}</span>

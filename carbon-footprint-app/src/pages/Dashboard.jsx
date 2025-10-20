@@ -6,7 +6,7 @@
  *  Description:
  *  Authenticated landing page showing a weekly overview: category breakdown,
  *  daily emissions trend, monthly goal progress and recent activity.
- *  Fetches data from the backend and renders CO₂ visualisations.
+ *  Fetches data from the backend and renders CO2 visualisations.
  *
  *  Author: Finlay Shaw
  * ============================================================
@@ -83,7 +83,7 @@ async function fetchRecent(limit = 5) {
 }
 
 export default function Dashboard() {
-  const { units } = useUnits(); // user’s preferred units (“kg” or “lb”)
+  const { units } = useUnits(); // users preferred units (“kg” or “lb”)
   const [range, setRange] = useState(() => ({ from: startOfWeek(), to: endOfWeek() }));
 
   // Data buckets
@@ -156,7 +156,7 @@ export default function Dashboard() {
   const avgPerDayDisplay = formatEmissions(totalWeekKg / 7, units);
 
   const bestDay = useMemo(() => {
-    // Find the lowest-emission day up to today (no peeking into the future)
+    // Find the lowest emission day up to today
     const today = new Date();
     const upper = new Date(Math.min(range.to.getTime(), today.setHours(23, 59, 59, 999)));
     const fromISO = iso(range.from);
@@ -179,7 +179,7 @@ export default function Dashboard() {
     [sum.items, units]
   );
 
-  // Monthly goal (overall cap, no per-category)
+  // Monthly goal
   const monthlyGoal = useMemo(() => {
     const active = (g) => (g?.period || "month") === "month" && Number(g?.is_active) === 1 && !g.category;
     const best = [...goals].filter(active).sort((a, b) => Number(a.target_kg) - Number(b.target_kg))[0];
@@ -267,14 +267,14 @@ export default function Dashboard() {
           </div>
         </section>
 
-        {/* Emissions (full width) */}
+        {/* Emissions */}
         <section className="rounded-xl border border-border p-4 mb-4 bg-surface shadow-subtle">
           <h3 className="font-semibold mb-2">Emissions over this week</h3>
           {/* Line graph for daily totals (Mon..Sun) */}
           <EmissionsLineGraph data={dailySeries} units={units} height={220} />
         </section>
 
-        {/* Recent (optional) */}
+        {/* Recent */}
         {recent && (
           <section className="rounded-xl border border-border p-4 mb-6 bg-surface shadow-subtle">
             <h3 className="font-semibold mb-2">Recent activity</h3>

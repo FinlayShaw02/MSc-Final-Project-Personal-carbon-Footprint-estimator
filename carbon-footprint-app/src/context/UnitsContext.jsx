@@ -26,7 +26,7 @@ export function UnitsProvider({ children }) {
     return v === "lb" ? "lb" : "kg";
   });
 
-  // On mount: fetch the user profile and updates units based off API (if available)
+  // fetch the user profile and updates units based off API
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -58,11 +58,11 @@ export function UnitsProvider({ children }) {
     units,                // current selected units ("kg" | "lb")
     changeUnits,          // function to change units
     isMetric: units === "kg", // convenience flag for metric usage
-    toKg: (n) => (units === "kg" ? n : n * 0.45359237), // convert from current -> kg
-    toLb: (n) => (units === "lb" ? n : n / 0.45359237), // convert from current -> lb
+    toKg: (n) => (units === "kg" ? n : n * 0.45359237), // convert from current to kg
+    toLb: (n) => (units === "lb" ? n : n / 0.45359237), // convert from current to lb
   }), [units]);
 
-  // Provide the units context to all children
+  // Provide the units context
   return <unitsContext.Provider value={value}>{children}</unitsContext.Provider>;
 }
 

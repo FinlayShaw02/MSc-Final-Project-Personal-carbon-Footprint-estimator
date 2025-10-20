@@ -21,8 +21,8 @@ try {
   $pdo->exec("SET SESSION sql_mode = CONCAT_WS(',', @@sql_mode, 'STRICT_TRANS_TABLES','NO_ENGINE_SUBSTITUTION')");
 } catch (Throwable $e) { /* ignore */ }
 
-$me    = current_user_id();           // current authenticated user (requester or addressee)
-$body  = json_body();                 // safe JSON body decode -> assoc array
+$me    = current_user_id();          
+$body  = json_body();                 
 $other = (int)($body['other_user_id'] ?? 0);
 $action = strtolower(trim((string)($body['action'] ?? 'accept')));
 
@@ -34,7 +34,7 @@ try {
   $pdo->beginTransaction();
 
   if ($action === 'accept') {
-    // Only the addressee (me) can accept a still-pending request from $other
+    // Only the addressee can accept a still pending request from $other
     $upd = $pdo->prepare(
       'UPDATE friend_requests
          SET status = "accepted", responded_at = NOW()
@@ -66,7 +66,7 @@ try {
   }
 
   if ($action === 'decline') {
-    // Only the addressee (me) can decline a still-pending request from $other
+    // Only the addressee can decline a still pending request from $other
     $upd = $pdo->prepare(
       'UPDATE friend_requests
          SET status = "declined", responded_at = NOW()
@@ -83,7 +83,7 @@ try {
     exit;
   }
 
-  // cancel: only the requester (me) can cancel an outgoing pending request to $other
+  // cancel: only the requester can cancel an outgoing pending request to $other
   $upd = $pdo->prepare(
     'UPDATE friend_requests
        SET status = "canceled", responded_at = NOW()

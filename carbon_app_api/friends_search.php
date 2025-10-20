@@ -8,7 +8,7 @@ require_once __DIR__ . '/config.php';
  *
  *  Description:
  *  Lightweight user search for the “Discover” tab. Returns users who:
- *    - match the query (name tokens ANDed; email ORed),
+ *    - match the query,
  *    - aren’t already friends,
  *    - don’t have a pending request with me (either direction),
  *    - aren’t blocked in either direction.

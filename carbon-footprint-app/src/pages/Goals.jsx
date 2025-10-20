@@ -4,7 +4,7 @@
  *  Component: Goals
  *
  *  Description:
- *  Create & manage personal emission caps (create/delete only).
+ *  Create & manage personal emission caps.
  *  Includes inline validation and a modal for delete confirm.
  *
  *  Author: Finlay Shaw
@@ -334,7 +334,7 @@ export default function Goals() {
       const totalKg = totalsKg[key] ?? 0;
       const targetKg = Number(g.target_kg);
 
-      // compute raw percent (unclamped), clamp copy for the bar
+      // compute raw percent, clamp copy for the bar
       const rawPct =
         targetKg > 0 ? (totalKg / targetKg) * 100 : (totalKg > 0 ? Infinity : 0);
       const pctForBar = Number.isFinite(rawPct)
@@ -395,7 +395,7 @@ export default function Goals() {
     });
   }, [goals, totalsKg, units]);
 
-  // Find the goal being deleted (for modal text)
+  // Find the goal being deleted
   const goalToDelete = confirmId ? goals.find((g) => g.id === confirmId) : null;
 
   return (

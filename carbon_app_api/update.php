@@ -57,7 +57,7 @@ try {
     exit;
   }
 
-  // Update (emissions_kg_co2e is a generated column in DB)
+  // Update
   $stmt = $pdo->prepare("
     UPDATE user_activities
        SET quantity = :quantity

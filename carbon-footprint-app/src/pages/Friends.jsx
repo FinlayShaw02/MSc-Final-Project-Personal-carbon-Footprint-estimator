@@ -21,7 +21,7 @@ const rgb = (s) => `rgb(${s})`;
 const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 const hash = (s) =>
   Array.from(s).reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
-// Deterministic pastel-ish color from a name (HSL -> pseudo-RGB)
+// Deterministic pastel-ish color from a name
 const nameToColor = (name = "") => {
   const h = Math.abs(hash(name)) % 360, s = 55, l = 45;
   const a = (k) => (k + h / 30) % 12;
@@ -57,7 +57,7 @@ function Avatar({ name, color }) {
     </div>
   );
 }
-// Auto-dismissing toast (2.5s) for success/error notices
+// Auto dismissing toast (2.5s) for success/error notices
 function Toast({ toast, onClose }) {
   useEffect(() => { if (!toast) return; const t = setTimeout(onClose, 2500); return () => clearTimeout(t); }, [toast, onClose]);
   if (!toast) return null;
@@ -174,7 +174,7 @@ export default function Friends() {
 
   // NEW: blocks state
   const [blocked, setBlocked]     = useState([]); // users I blocked
-  const [blockedBy, setBlockedBy] = useState([]); // users who blocked me (FYI)
+  const [blockedBy, setBlockedBy] = useState([]); // users who blocked me
 
   // initial load: friends/requests/suggestions + block lists
   useEffect(() => {
@@ -189,7 +189,7 @@ export default function Friends() {
         setOutgoing(d.outgoing);
         setDiscover(d.suggestions);
 
-        // load blocks separately (non-fatal if it fails)
+        // load blocks separately
         try {
           const bl = await API.blocks();
           if (cancel) return;
@@ -205,7 +205,7 @@ export default function Friends() {
     return () => { cancel = true; };
   }, []);
 
-  // debounced server search (Discover tab only, 250ms)
+  // debounced server search
   const qRef = useRef("");
   useEffect(() => {
     if (tab !== "discover") { setSearchResults(null); return; }

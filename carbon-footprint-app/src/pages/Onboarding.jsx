@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 
 export default function Onboarding() {
-  // Hook from react-router-dom used to programmatically navigate between routes
+
   const navigate = useNavigate();
 
   return (

@@ -20,7 +20,7 @@ function CO2PieChart({
   units = "kg",
   size = 260,            // overall SVG size
   innerRadius = 0.58,    // donut inner radius as fraction of outer radius
-  sort = "desc",         // sorting order for slices: "asc" | "desc" | anything (no sort)
+  sort = "desc",         // sorting order for slices: "asc" | "desc" | anything
   palette = "okabe",     // color palette name or custom array
   legendCols = 2,        // number of legend columns when below
   legendPosition = "bottom", // "bottom" or side
@@ -52,7 +52,7 @@ function CO2PieChart({
 
   // precompute donut slices
   const slices = useMemo(() => {
-    // Convert each row to an arc path segment with a center-tip for tooltip placement
+    // Convert each row to an arc path segment
     if (!rows.length || total <= 0) return [];
     let a = -Math.PI / 2; // start at top (12 o'clock)
     return rows.map((r, i) => {
@@ -67,13 +67,13 @@ function CO2PieChart({
       const x1 = C + R * Math.cos(a1);
       const y1 = C + R * Math.sin(a1);
 
-      // Inner arc endpoints (reversed to close shape)
+      // Inner arc endpoints
       const xi0 = C + rInner * Math.cos(a1);
       const yi0 = C + rInner * Math.sin(a1);
       const xi1 = C + rInner * Math.cos(a0);
       const yi1 = C + rInner * Math.sin(a0);
 
-      const large = a1 - a0 > Math.PI ? 1 : 0; // large-arc-flag for > 180°
+      const large = a1 - a0 > Math.PI ? 1 : 0; // large-arc-flag for > 180 degree arcs
 
       // Construct donut slice path using two arcs + lines
       const path = [
@@ -84,7 +84,7 @@ function CO2PieChart({
         "Z",
       ].join(" ");
 
-      // Mid-angle for tooltip anchor (rough center of slice)
+      // Mid-angle for tooltip anchor
       const mid = (a0 + a1) / 2;
       const tipR = (R + rInner) / 2;
       const tipX = C + tipR * Math.cos(mid);
@@ -94,7 +94,7 @@ function CO2PieChart({
     });
   }, [rows, total, C, R, rInner, colors]);
 
-  // Keyboard navigation for slice focus (left/right arrows)
+  // Keyboard navigation for slice focus
   const prev = useCallback(
     () => setActive((i) => (i == null ? 0 : (i - 1 + slices.length) % slices.length)),
     [slices.length]
@@ -111,7 +111,7 @@ function CO2PieChart({
   const visibleRows = rows.slice(0, Math.max(0, maxLegend)); // legend subset
   const hiddenCount = Math.max(0, rows.length - visibleRows.length); // additional items count
 
-  // theme-aware colors (from CSS variables)
+  // theme-aware colors
   const c = {
     axis: "rgb(var(--muted-fg))",
     label: "rgb(var(--fg))",
@@ -183,7 +183,7 @@ function CO2PieChart({
               </>
             )}
 
-            {/* Floating tooltip near active slice (clamped to bounds) */}
+            {/* Floating tooltip near active slice */}
             {active != null && slices[active] && (
               <Tooltip
                 svgSize={size}
@@ -198,7 +198,7 @@ function CO2PieChart({
           </svg>
         </div>
 
-        {/* Legend (cap + View all) */}
+        {/* Legend */}
         <Legend
           rows={visibleRows}
           total={total}
@@ -370,7 +370,7 @@ function getColors(palette, n) {
     return out;
   }
 
-  // Okabe–Ito palette (kept as-is; theme controls surfaces/labels)
+  // Okabe-Ito palette (colorblind-safe)
   const okabe = [
     "#009E73","#E69F00","#56B4E9","#F0E442",
     "#0072B2","#D55E00","#CC79A7","#000000",

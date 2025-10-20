@@ -17,7 +17,7 @@ import React from "react";
 const InputField = ({
   label,         // optional field label displayed above the input
   name,          // input name/id for form handling
-  type = "text", // input type (e.g., "text", "email", "password", "number")
+  type = "text", // input type
   value,         // controlled input value
   onChange,      // callback for handling user input
   placeholder,   // optional placeholder text

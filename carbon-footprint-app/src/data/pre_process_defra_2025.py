@@ -35,7 +35,7 @@ df = df.rename(columns={
 # - Keep only rows with a valid category and numeric EF.
 df = df.dropna(subset=["Category", "EmissionFactor"]).reset_index(drop=True)
 
-# Step 4: Filter to only 'kg CO2e' rows (ignore CH4/N2O gas breakdowns)
+# Step 4: Filter to only 'kg CO2e' rows 
 # - DEFRA provides multiple gases and units; we retain aggregate CO2e rows.
 df = df[df["GHG/Unit"] == "kg CO2e"]
 

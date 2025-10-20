@@ -103,7 +103,7 @@ try {
     try {
       $stmt->execute($params);
     } catch (PDOException $e) {
-      // Handle unique constraint violations (e.g., duplicate email)
+      // Handle unique constraint violations 
       if ($e->getCode() === '23000') {
         http_response_code(409);
         echo json_encode(['error' => 'That email is already in use.']);
@@ -117,7 +117,7 @@ try {
   }
 
   if ($method === 'DELETE') {
-    // Hard delete the user; rely on FK CASCADEs for child rows
+    // Hard delete the user
     $pdo->beginTransaction();
     try {
       $pdo->prepare("DELETE FROM users WHERE id = ? LIMIT 1")->execute([$uid]);

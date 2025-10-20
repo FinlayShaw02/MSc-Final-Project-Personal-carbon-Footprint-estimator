@@ -18,7 +18,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
  * CategoryBarChart
  * - Horizontal on desktop/tablet
  * - Vertical on mobile (auto)
- * Accepts [{ category|label, value }]
+ * Accepts [{ category/label, value }]
  */
 function CategoryBarChart({
   data = [],
@@ -67,7 +67,7 @@ function CategoryBarChart({
 
   /* ===== Layout ===== */
   const topPad = 20;
-  const bottomPad = vertical ? 68 : 28; // space for 2-line labels on mobile
+  const bottomPad = vertical ? 68 : 28; // space for 2 line labels on mobile
   const leftPad = 30;  // give labels more breathing room
   const rightPad = 18;
 
@@ -85,7 +85,7 @@ function CategoryBarChart({
 
   const maxV = Math.max(1, ...rows.map((r) => r.value)); // avoid division by zero
 
-  /* ===== Theme-aware colors (CSS variables) ===== */
+  /* ===== Theme-aware colors ===== */
   const gridColor = "rgb(var(--border) / 0.45)";
   const railColor = "rgb(var(--surface-variant))";
   const barColor = "rgb(var(--primary))";
@@ -112,7 +112,7 @@ function CategoryBarChart({
           Emissions ({units})
         </text>
 
-        {/* Horizontal layout (desktop/tablet) */}
+        {/* Horizontal layout */}
         {!vertical && (
           <HorizontalBars
             rows={rows}

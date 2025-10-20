@@ -30,15 +30,15 @@ export const THEMES = [
 ];
 
 /**
- * Extract only theme class names (excluding “light” and “system”)
- * these are the classes toggled on <html>.
+ * Extract only theme class names (excluding “light”).
+ * These are the classes toggled on <html>.
  */
 export const THEME_CLASSES = THEMES
   .map(t => t.value)
-  .filter(v => v !== "light" && v !== "system");
+  .filter(v => v !== "light");
 
 
-/* ---------- Persistence + system helpers ---------- */
+/* ---------- Persistence + helpers ---------- */
 
 /**
  * Get the saved theme from localStorage.
@@ -46,14 +46,6 @@ export const THEME_CLASSES = THEMES
  */
 export function getSavedTheme() {
   return localStorage.getItem("theme") || "light";
-}
-
-/**
- * Detects the user’s OS-level color scheme preference.
- * Returns either "dark" or "light".
- */
-export function resolveSystemScheme() {
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 /**
@@ -79,11 +71,8 @@ export function applyTheme(theme) {
   // Remove all existing theme classes first
   THEME_CLASSES.forEach(cls => html.classList.remove(cls));
 
-  if (theme === "system") {
-    // System mode: follow OS preference dynamically
-    setColorSchemeOnHtml(resolveSystemScheme());
-  } else if (theme === "light") {
-    // Default light mode  no theme class needed
+  if (theme === "light") {
+    // Default light mode — no theme class needed
     setColorSchemeOnHtml("light");
   } else {
     // Apply a custom theme class (e.g., theme-dark, theme-blue)
